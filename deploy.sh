@@ -107,11 +107,60 @@ deploy_config() {
     return 0
 }
 
+# Reload services after deployment
+reload_services() {
+    log_info "Reloading services..."
+    echo ""
+
+    # Reload Hyprland configuration
+    if command -v hyprctl &> /dev/null; then
+        log_info "Reloading Hyprland configuration..."
+        hyprctl reload &> /dev/null && log_success "Hyprland reloaded" || log_warning "Failed to reload Hyprland"
+    fi
+
+    # Restart hyprpaper (wallpaper daemon)
+    if command -v hyprpaper &> /dev/null; then
+        log_info "Restarting hyprpaper..."
+        killall hyprpaper 2>/dev/null
+        hyprpaper &> /dev/null &
+        sleep 1
+        if pgrep -x hyprpaper > /dev/null; then
+            log_success "hyprpaper restarted"
+        else
+            log_warning "hyprpaper may not be running"
+        fi
+    fi
+
+    # Restart waybar (status bar)
+    if command -v waybar &> /dev/null; then
+        log_info "Restarting waybar..."
+        killall waybar 2>/dev/null
+        waybar &> /dev/null &
+        sleep 1
+        if pgrep -x waybar > /dev/null; then
+            log_success "waybar restarted"
+        else
+            log_warning "waybar may not be running"
+        fi
+    fi
+
+    # Setup rofi image cache (required for theme)
+    if [ -f "$CONFIG_DIR/rofi/image.png" ]; then
+        log_info "Setting up rofi image cache..."
+        cp "$CONFIG_DIR/rofi/image.png" /dev/shm/rofi_image.png 2>/dev/null && \
+            log_success "Rofi image cached" || \
+            log_warning "Failed to cache rofi image"
+    fi
+
+    echo ""
+    log_success "All services reloaded!"
+}
+
 # Check dependencies
 check_dependencies() {
     log_info "Checking dependencies..."
 
-    local deps=("hyprland" "hyprpaper")
+    local deps=("hyprland" "hyprpaper" "waybar" "rofi")
     local missing_deps=()
 
     for dep in "${deps[@]}"; do
@@ -123,12 +172,7 @@ check_dependencies() {
     if [ ${#missing_deps[@]} -gt 0 ]; then
         log_warning "Missing dependencies: ${missing_deps[*]}"
         log_info "Install with: sudo pacman -S ${missing_deps[*]}"
-        read -p "Continue anyway? (y/N) " -n 1 -r
-        echo
-        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-            log_error "Deployment cancelled"
-            exit 1
-        fi
+        log_warning "Continuing anyway..."
     else
         log_success "All dependencies found"
     fi
@@ -147,23 +191,28 @@ main() {
     echo "  Config dir:   $CONFIG_DIR"
     echo "  Backup dir:   $BACKUP_DIR"
     echo ""
-
-    read -p "Proceed with deployment? (y/N) " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        log_error "Deployment cancelled"
-        exit 1
-    fi
-
+    log_info "Proceeding with deployment..."
     echo ""
 
     # Deploy Hyprland configuration
     deploy_config "hypr"
 
+    # Deploy Waybar (status bar)
+    deploy_config "waybar"
+
+    # Make waybar scripts executable
+    if [ -d "$CONFIG_DIR/waybar/scripts" ]; then
+        log_info "Setting waybar scripts as executable..."
+        chmod +x "$CONFIG_DIR/waybar/scripts"/*.sh 2>/dev/null && \
+            log_success "Waybar scripts are now executable" || \
+            log_warning "Some scripts may not be executable"
+    fi
+
+    # Deploy Rofi (application launcher)
+    deploy_config "rofi"
+
     # TODO: Add more configs as needed
-    # deploy_config "waybar"
     # deploy_config "alacritty"
-    # deploy_config "rofi"
     # deploy_config "eww"
     # deploy_config "cava"
     # deploy_config "neofetch"
@@ -176,10 +225,15 @@ main() {
     fi
 
     echo ""
+
+    # Reload all services to apply changes
+    reload_services
+
+    echo ""
     echo -e "${CYAN}Next steps:${NC}"
     echo "  1. Review the deployed config at: $CONFIG_DIR/hypr"
     echo "  2. Customize for your Macbook Pro (keyboard layouts, monitor settings, etc.)"
-    echo "  3. Reload Hyprland: hyprctl reload"
+    echo "  3. Your wallpaper and statusbar should now be visible!"
     echo ""
     echo -e "${GREEN}🍸 Welcome to Dionysus!${NC}"
 }

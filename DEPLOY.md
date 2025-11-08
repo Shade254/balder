@@ -15,19 +15,20 @@ cd ~/balder
 
 ## What the Script Does
 
-1. **Checks dependencies** - Verifies Hyprland is installed
+1. **Checks dependencies** - Verifies Hyprland, hyprpaper, and waybar are installed
 2. **Creates backups** - Backs up existing configs to `~/.dotfiles-backup-TIMESTAMP/`
 3. **Deploys configs** - Creates symlinks from `~/.config/` to your dotfiles
-4. **Confirms actions** - Asks before making changes
+4. **Reloads services** - Automatically restarts hyprpaper, waybar, and reloads Hyprland
+5. **Verifies everything** - Ensures all services are running after deployment
 
 ## Current Deployment
 
 - ✅ **Hyprland** (`~/.config/hypr/`)
 - ✅ **Hyprpaper** (wallpaper daemon, auto-starts with Hyprland)
+- ✅ **Waybar** (status bar with custom modules)
 
 ## Coming Soon (Uncomment in deploy.sh)
 
-- ⏳ Waybar
 - ⏳ Alacritty
 - ⏳ Rofi
 - ⏳ Eww
@@ -107,6 +108,7 @@ hyprctl reload
 Current minimal dependencies:
 - `hyprland` - Window manager
 - `hyprpaper` - Wallpaper daemon
+- `waybar` - Status bar
 
 Full setup dependencies (for complete rice):
 - `waybar` - Status bar
@@ -139,6 +141,28 @@ Make sure you're running from the repo directory, not from a different location.
 
 **Hyprland won't start:**
 Check logs: `~/.config/hypr/hypr.log`
+
+**Wallpaper not showing:**
+The deployment script automatically restarts hyprpaper. If it still doesn't show:
+```bash
+killall hyprpaper
+hyprpaper &
+```
+
+**Waybar not appearing:**
+The deployment script automatically restarts waybar. If it's not visible:
+```bash
+killall waybar
+waybar &
+```
+
+**Services didn't reload:**
+The script automatically reloads all services. For manual reload:
+```bash
+hyprctl reload          # Reload Hyprland config
+killall hyprpaper && hyprpaper &  # Restart wallpaper
+killall waybar && waybar &        # Restart status bar
+```
 
 ## Next Steps
 
