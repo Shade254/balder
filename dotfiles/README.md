@@ -28,9 +28,9 @@
           .'    |   ||~~~~~~~~|    |  .'     |    | |~~~~~~~~|   |
         /'______|___||__###___|____|/'_______|____|_|__###___|___|
 ``` 
-# Добро пожаловать, командир.  
-Rice config for **Hyprland** on Arch Linux,  
-running on my **ROG Zephyrus G15** (_dionysus_). 
+# Добро пожаловать, командир.
+Rice configuration for **Hyprland** on Arch Linux,
+optimized for **MacBook Pro 2018 T2** (_dionysus_). 
 
 ## Features
   - Animated **Neofetch**  

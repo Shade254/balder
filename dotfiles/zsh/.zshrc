@@ -39,18 +39,23 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
 # ==================
 # Plugins
 # ==================
-[[ -f "$HOME/.zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh" ]] && \
-  source "$HOME/.zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+[[ -f "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh" ]] && \
+  source "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 
-[[ -f "$HOME/.zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh" ]] && \
-  source "$HOME/.zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
-  
-  autoload -Uz compinit && compinit -C   # cache completions
+[[ -f "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh" ]] && \
+  source "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
+
+autoload -Uz compinit && compinit -C   # cache completions
 
 
 # ==================
 # Aliases & Functions
 # ==================
+# Bash-compatible aliases (transferred from .bashrc)
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# Load custom aliases/functions if they exist
 [[ -f "$HOME/.config/zsh/aliases.zsh" ]] && source "$HOME/.config/zsh/aliases.zsh"
 [[ -f "$HOME/.config/zsh/functions.zsh" ]] && source "$HOME/.config/zsh/functions.zsh"
 

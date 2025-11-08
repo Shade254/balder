@@ -1,10 +1,14 @@
 #!/bin/bash
+# ──────────────────────────────────────────────────────────────────────────
+#  Waybar/Eww Dynamic Switcher (Event-driven wallpaper & widget manager)
+#  Switches between Waybar (with windows) and Eww (empty workspace)
+# ──────────────────────────────────────────────────────────────────────────
 
 logfile="/tmp/waybar_watcher_loop_final.log"
 
-# Wallpapers
-wallpaper_with_window="/home/pewds/.config/hypr/wallpapers/black.png"
-wallpaper_without_window="/home/pewds/.config/hypr/wallpapers/bg_wallpaper.png"
+# Wallpapers (dynamic paths)
+wallpaper_with_window="$HOME/.config/hypr/wallpapers/black.png"
+wallpaper_without_window="$HOME/.config/hypr/wallpapers/bg_wallpaper.png"
 
 current_wallpaper=""
 eww_visible=false
@@ -41,11 +45,12 @@ while true; do
 
     active_workspace=$(hyprctl activeworkspace -j | jq -r '.id')
     window_count=$(hyprctl clients -j | jq "[.[] | select(.workspace.id == $active_workspace and .mapped == true)] | length")
+    fullscreen_window=$(hyprctl clients -j | jq "[.[] | select(.workspace.id == $active_workspace and .fullscreen == true)] | length")
 
-    echo "Window count: $window_count" >> "$logfile"
+    echo "Window count: $window_count, Fullscreen: $fullscreen_window" >> "$logfile"
 
-    if [ "$window_count" -eq 0 ]; then
-        # No windows → Eww on, Waybar off
+    if [ "$window_count" -eq 0 ] && [ "$fullscreen_window" -eq 0 ]; then
+        # No windows and not in fullscreen → Eww on, Waybar off
         if [ "$current_wallpaper" != "$wallpaper_without_window" ]; then
             echo "Switching to wallpaper WITHOUT window" >> "$logfile"
             hyprctl hyprpaper preload "$wallpaper_without_window"

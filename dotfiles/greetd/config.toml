@@ -1,0 +1,21 @@
+# ──────────────────────────────────────────────────────────────────────────
+#  greetd Configuration
+#  Minimal login manager for Hyprland
+# ──────────────────────────────────────────────────────────────────────────
+
+[terminal]
+# The VT to run the greeter on. Can be "next", "current" or a number
+# designating the VT.
+vt = 1
+
+[default_session]
+# The default session (command to run) when no session is selected
+# tuigreet will present a login prompt and launch Hyprland
+# Theme matches Alacritty color scheme: Nord-inspired neon-accent theme
+# Background: #282c34, Foreground: #9cdef2 (light cyan)
+# Accent colors: #61afef (blue), #9cdef2 (cyan), #e5c07b (yellow)
+command = "tuigreet --time --remember --remember-session --asterisks --greet-align center --theme 'text=lightcyan;time=lightcyan;container=black;border=blue;title=lightcyan;greet=lightcyan;prompt=blue;input=lightcyan;action=blue;button=cyan' --cmd Hyprland"
+
+# The user to run the command as. The working directory will be set to the
+# home directory of this user.
+user = "greeter"

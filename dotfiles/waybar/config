@@ -7,6 +7,8 @@
 {
   "layer": "top",
   "position": "top",
+  "exclusive": true,
+  "passthrough": false,
   "margin-top": 12,
   "margin-bottom": -8,
   "width": 2010,
@@ -83,8 +85,7 @@
     "exec": "~/.config/waybar/scripts/power-profile.sh",
     "return-type": "",
     "format": "⚡ {}",
-    "interval": "once",
-    "signal": 1,
+    "interval": 2,
     "tooltip-format": "Click to cycle power profile",
     "on-click": "~/.config/hypr/scripts/t2-power/cycle-power-mode.sh"
   },

@@ -49,7 +49,7 @@ for cpu in /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference; d
     }
 done
 
-# Signal Waybar to update widget (event-driven)
-pkill -USR1 waybar 2>/dev/null || true
+# Waybar will auto-detect the change via polling interval
+# No need to signal - prevents waybar from being killed
 
 # Release lock (automatic on script exit)
