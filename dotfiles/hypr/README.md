@@ -11,21 +11,21 @@ Tuned for EWW integration, CAVA visualizer, and Waybar
 
 ##  Features
   - Dynamic waybar depending on active/inactive windows.
-  - Firefox preload for smooth quick access. 
-  - ASUS keyboard fix scripts – brightness, breathing, and profile cycling
+  - Firefox preload for smooth quick access.
+  - MacBook Pro T2 hardware integration – power management, keyboard backlight, breathing effects
 
 ![Hyprland Demo 2](../../assets/demo-hypr-2.gif)
 
-``` 
+```
 hyprland/
 ├── hyprland.conf
 ├── scripts/
 │   ├── waybar_watcher.sh
-│   └── asus-kbd/
-│       ├── kbd-brightness.sh
-│       ├── kbd-breathing.sh
-│       └── cycle-profile.sh
-└── demo.gif  
+│   ├── t2-power/
+│   │   └── cycle-power-mode.sh
+│   └── t2-kbd/
+│       └── kbd-breathing.sh
+└── demo.gif
 ```
 
 ## Requirements
@@ -50,11 +50,40 @@ This config ties into your other dotfiles:
 
 ## Usage
 
-- **Waybar/Eww** → via [`waybar_watcher.sh`](https://github.com/pewdiepie-archdaemon/dionysus/blob/dionysus/dotfiles/hypr/scripts/waybar_watcher.sh)  
+- **Waybar/Eww** → via [`waybar_watcher.sh`](https://github.com/pewdiepie-archdaemon/dionysus/blob/dionysus/dotfiles/hypr/scripts/waybar_watcher.sh)
   Keeps Waybar and EWW and hyprpaper running reliably under Hyprland.
-- **CAVA Visualizer** → launched on login, outputs ASCII to `/tmp/cava.raw`  
-  Integrated with EWW via [`audio_visualizer.py`][`audio_visualizer.py`](https://github.com/pewdiepie-archdaemon/dionysus/blob/dionysus/dotfiles/eww/).
-- **ASUS Keyboard** → custom scripts for backlight and performance profiles in  
-  [`asus-kbd`](https://github.com/pewdiepie-archdaemon/dionysus/tree/dionysus/dotfiles/hypr/scripts/asus-kbd)   
-  Includes brightness, breathing effects, and cycle-profile utilities.
+- **CAVA Visualizer** → launched on login, outputs ASCII to `/tmp/cava.raw`
+  Integrated with EWW via [`audio_visualizer.py`](https://github.com/pewdiepie-archdaemon/dionysus/blob/dionysus/dotfiles/eww/).
+
+## MacBook Pro 2018 T2 Configuration
+
+This configuration is optimized for MacBook Pro 2018 with T2 chip running Arch Linux (linux-t2 kernel).
+
+### Power Management
+- **Intel EPP** (Energy Performance Preference) for CPU power management
+- **F5**: Cycle power profiles (REACTOR SLEEP → STABILIZATION → RAZGON)
+- **Waybar widget**: Shows current power mode with nuclear theme colors
+
+### Keyboard Backlight
+- **F3**: Decrease keyboard backlight brightness
+- **F4** (above F3): Increase keyboard backlight brightness
+- **F4** (XF86Launch3): Toggle breathing effect
+
+### Hardware Support
+- ✅ Keyboard backlight (`apple::kbd_backlight` device)
+- ✅ Intel CPU frequency scaling (P-State driver with EPP)
+- ✅ Display brightness (native function keys)
+- ✅ TouchPad gestures
+- ❌ Touch ID (not supported on Linux)
+- ❌ FaceTime camera (driver limitations)
+
+### Requirements
+- linux-t2 kernel (6.11+ recommended)
+- brightnessctl for keyboard backlight
+- Udev rules for EPP and keyboard backlight permissions (see `../system/`)
+
+### Installation
+1. Deploy dotfiles: `./deploy.sh`
+2. Install udev rules: `sudo cp dotfiles/system/*.rules /etc/udev/rules.d/ && sudo udevadm control --reload`
+3. Reload Hyprland: `hyprctl reload`
 

@@ -1,0 +1,3 @@
+# Allow user-space writes to MacBook keyboard backlight
+ACTION=="add|change", SUBSYSTEM=="leds", KERNEL=="*::kbd_backlight", \
+  RUN+="/bin/chmod 0666 /sys/class/leds/%k/brightness"

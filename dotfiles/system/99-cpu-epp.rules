@@ -1,0 +1,3 @@
+# Allow user-space writes to Intel EPP interface
+ACTION=="add|change", KERNEL=="cpu[0-9]*", SUBSYSTEM=="cpu", \
+  RUN+="/bin/chmod 0666 /sys/devices/system/cpu/cpu%n/cpufreq/energy_performance_preference"

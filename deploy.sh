@@ -230,12 +230,42 @@ main() {
     reload_services
 
     echo ""
+    echo -e "${CYAN}⚙️  MacBook T2 Hardware Setup:${NC}"
+
+    # Check if udev rules are installed
+    local missing_rules=false
+
+    if [ ! -f "/etc/udev/rules.d/99-cpu-epp.rules" ]; then
+        log_warning "Intel EPP udev rule not installed!"
+        missing_rules=true
+    else
+        log_success "Intel EPP udev rule installed"
+    fi
+
+    if [ ! -f "/etc/udev/rules.d/99-kbd-backlight.rules" ]; then
+        log_warning "Keyboard backlight udev rule not installed!"
+        missing_rules=true
+    else
+        log_success "Keyboard backlight udev rule installed"
+    fi
+
+    if [ "$missing_rules" = true ]; then
+        echo ""
+        echo -e "${YELLOW}To install missing udev rules, run:${NC}"
+        echo -e "  ${GREEN}sudo cp dotfiles/system/*.rules /etc/udev/rules.d/${NC}"
+        echo -e "  ${GREEN}sudo udevadm control --reload${NC}"
+        echo -e "  ${GREEN}sudo udevadm trigger${NC}"
+        echo ""
+    fi
+
+    echo ""
     echo -e "${CYAN}Next steps:${NC}"
     echo "  1. Review the deployed config at: $CONFIG_DIR/hypr"
-    echo "  2. Customize for your Macbook Pro (keyboard layouts, monitor settings, etc.)"
-    echo "  3. Your wallpaper and statusbar should now be visible!"
+    echo "  2. Test power profile cycling with F5 (XF86Launch4)"
+    echo "  3. Test keyboard backlight with F3/F4"
+    echo "  4. Your wallpaper and statusbar should now be visible!"
     echo ""
-    echo -e "${GREEN}🍸 Welcome to Dionysus!${NC}"
+    echo -e "${GREEN}🍸 Welcome to Dionysus - MacBook T2 Edition!${NC}"
 }
 
 # Run main function

@@ -17,7 +17,7 @@
 - **VPN integration** with NordVPN status.
 - **Bluetooth module** with custom toggle script and tooltips
 - **Network widget** with icons, bandwidth stats, and `nm-connection-editor` launcher
-- **ASUS laptop profile** module, showing/toggling performance modes
+- **Power profile** module for MacBook T2, showing/toggling Intel EPP modes
 - **Power menu** integration via Rofi  
 
 ![Waybar Demo 2](../../assets/demo-waybar-2.png)  
@@ -27,7 +27,7 @@
 ├── config
 ├── demo.png
 ├── scripts
-│   ├── asus-profile.sh
+│   ├── power-profile.sh
 │   ├── battery.sh
 │   ├── bluetooth-toggle.sh
 │   ├── brightness-toggle.sh

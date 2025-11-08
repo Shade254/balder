@@ -52,10 +52,19 @@ monitor = eDP-1, preferred, auto, 1.25
 kb_layout = gb, se,  # Change to your preferred layouts
 ```
 
-### 3. ASUS-Specific Scripts
-The config includes ROG-specific keyboard scripts. You may want to:
-- Comment out lines 217-221 (ASUS keyboard bindings)
-- Remove/modify lines 172-176 (ASUS function keys)
+### 3. MacBook T2 Hardware Setup
+
+**IMPORTANT:** After running `./deploy.sh`, install the udev rules for passwordless hardware control:
+
+```bash
+sudo cp dotfiles/system/*.rules /etc/udev/rules.d/
+sudo udevadm control --reload
+sudo udevadm trigger
+```
+
+This enables:
+- Intel EPP power management (F5 to cycle profiles)
+- Keyboard backlight control (F3/F4 for brightness, F4 for breathing effect)
 
 ### 4. Touchpad Settings
 Line 130-132 already has natural scrolling enabled, which is great for Mac users!
@@ -174,6 +183,14 @@ killall waybar && waybar &        # Restart status bar
 
 ---
 
-**Note:** This is designed for ROG Zephyrus G15 but easily adaptable for Macbook Pro. Main changes needed are monitor settings, keyboard layouts, and removing ASUS-specific scripts.
+## MacBook Pro 2018 T2 Edition
+
+**Note:** This configuration is now optimized for MacBook Pro T2 hardware. If you're running on different hardware (ASUS ROG, etc.), power management and keyboard controls may need adjustment.
+
+### T2-Specific Features
+- **Intel EPP** power management with nuclear theme (REACTOR SLEEP / STABILIZATION / RAZGON)
+- **Keyboard backlight** control with breathing effects
+- **Event-driven** Waybar updates (zero polling)
+- **Hardware Controls**: F3/F4 for keyboard backlight, F5 for power profiles
 
 🍸 **Добро пожаловать, командир!**
