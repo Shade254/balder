@@ -5,9 +5,9 @@
 # Dependencies: brightnessctl, seq, printf, awk
 #  ─────────────────────────────────────────────────────────
 
-# Get brightness percentage
-brightness=$(brightnessctl get)
-max_brightness=$(brightnessctl max)
+# Get brightness percentage from SCREEN (not touchbar!)
+brightness=$(brightnessctl --device='acpi_video0' get)
+max_brightness=$(brightnessctl --device='acpi_video0' max)
 percent=$((brightness * 100 / max_brightness))
 
 # Build ASCII bar
@@ -30,7 +30,7 @@ else
 fi
 
 # Device name (first column from brightnessctl --machine-readable)
-device=$(brightnessctl --machine-readable | awk -F, 'NR==1 {print $1}')
+device=$(brightnessctl --device='acpi_video0' --machine-readable | awk -F, 'NR==1 {print $1}')
 
 # Tooltip text
 tooltip="Brightness: $percent%\nDevice: $device"

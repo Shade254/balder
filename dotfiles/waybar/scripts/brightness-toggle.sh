@@ -5,15 +5,15 @@
 # Dependencies: brightnessctl
 # ─────────────────────────────────────────────────────
 
-current=$(brightnessctl get)
-max=$(brightnessctl max)
+current=$(brightnessctl --device='acpi_video0' get)
+max=$(brightnessctl --device='acpi_video0' max)
 percent=$((current * 100 / max))
 
 if [ "$percent" -lt 45 ]; then
-  brightnessctl set 60%
+  brightnessctl --device='acpi_video0' set 60%
 elif [ "$percent" -lt 85 ]; then
-  brightnessctl set 100%
+  brightnessctl --device='acpi_video0' set 100%
 else
-  brightnessctl set 30%
+  brightnessctl --device='acpi_video0' set 30%
 fi
 

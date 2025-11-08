@@ -132,8 +132,8 @@
     "return-type": "json",
     "interval": 2,
     "on-click": "~/.config/waybar/scripts/brightness-toggle.sh",
-    "on-scroll-up": "brightnessctl set +5%",
-    "on-scroll-down": "brightnessctl set 5%-"
+    "on-scroll-up": "brightnessctl --device='acpi_video0' --min-value=10 set +2%",
+    "on-scroll-down": "brightnessctl --device='acpi_video0' --min-value=10 set 2%-"
   },
 
   "backlight": {
@@ -175,8 +175,8 @@
     "return-type": "json",
     "interval": 1,
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "on-scroll-up": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+",
-    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    "on-scroll-up": "wpctl set-volume -l 1.1 @DEFAULT_AUDIO_SINK@ 1%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-"
   },
 
 
