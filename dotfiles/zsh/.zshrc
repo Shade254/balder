@@ -31,7 +31,7 @@ fi
 # ==================
 #  Prompt
 # ==================
-PROMPT='%F{white}%BArchlinux%f%F{magenta}_%f%F{blue}Dionysus%f %F{black}❯%f '
+PROMPT='%F{cyan}arch_t2_miro%f %F{black}❯%f '
 
 # Syntax highlighting / autosuggestions
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)

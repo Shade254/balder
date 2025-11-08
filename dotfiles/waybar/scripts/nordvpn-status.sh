@@ -1,7 +1,7 @@
 #!/bin/bash
 # ──────────────────────────────────────────────────────────────────────────
 #  nordvpn-status.sh - NordVPN Status Display for Waybar
-#  Part of Balder Dotfiles - Dionysus Edition
+#  Part of Balder Dotfiles - Balder Edition
 # ──────────────────────────────────────────────────────────────────────────
 # Description: Checks NordVPN connection status and displays current server
 # Usage: Called by Waybar `custom/vpn` every 5 seconds

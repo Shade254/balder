@@ -1,7 +1,7 @@
 #!/bin/bash
 # ──────────────────────────────────────────────────────────────────────────
 #  °˖* ૮( • ᴗ ｡)っ🍸 Balder Dotfiles - Modular Installer
-#  Dionysus vers. 1.0 - MacBook Pro 2018 Touchbar Edition
+#  Balder v1.0 - MacBook Pro 2018 Touchbar Edition
 # ──────────────────────────────────────────────────────────────────────────
 #
 #  Install dependencies for your Hyprland rice, modularly!
@@ -166,7 +166,7 @@ main() {
     echo "  2. Reboot or log out and log back in"
     echo "  3. Enjoy your Hyprland rice!"
     echo ""
-    echo -e "${GREEN}🍸 Welcome to Dionysus!${NC}"
+    echo -e "${GREEN}🍸 Welcome to Balder!${NC}"
 }
 
 # Run main

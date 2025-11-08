@@ -1,7 +1,7 @@
 # Hyprland Config 
 
 ───────────────────────────────────────────────  
- °˖* ૮( • ᴗ ｡)っ🍸 shheersh - Dionysus vers. 1.0   
+ °˖* ૮( • ᴗ ｡)っ🍸 shheersh - Balder v1.0   
  ───────────────────────────────────────────────  
  
 ## Custom **hyprland** config
@@ -50,10 +50,10 @@ This config ties into your other dotfiles:
 
 ## Usage
 
-- **Waybar/Eww** → via [`waybar_watcher.sh`](https://github.com/pewdiepie-archdaemon/dionysus/blob/dionysus/dotfiles/hypr/scripts/waybar_watcher.sh)
+- **Waybar/Eww** → via [`waybar_watcher.sh`](scripts/waybar_watcher.sh)
   Keeps Waybar and EWW and hyprpaper running reliably under Hyprland.
 - **CAVA Visualizer** → launched on login, outputs ASCII to `/tmp/cava.raw`
-  Integrated with EWW via [`audio_visualizer.py`](https://github.com/pewdiepie-archdaemon/dionysus/blob/dionysus/dotfiles/eww/).
+  Integrated with EWW via `audio_visualizer.py`.
 
 ## MacBook Pro 2018 T2 Configuration
 

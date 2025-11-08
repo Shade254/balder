@@ -15,7 +15,7 @@
 '______|___||__###___|____|/'_______|____|_|__###___|___|
 ```
 
-**🍸 Dionysus vers. 1.0** - Production-ready Hyprland configuration for MacBook Pro 2018 T2
+**🍸 Balder v1.0** - Production-ready Hyprland configuration for MacBook Pro 2018 T2
 
 [![](https://img.shields.io/badge/Hyprland-Dynamic-blue?style=flat-square&logo=wayland&logoColor=white)](https://hyprland.org)
 [![](https://img.shields.io/badge/Waybar-Event_Driven-cyan?style=flat-square)](https://github.com/Alexays/Waybar)
@@ -288,9 +288,9 @@ Feel free to use, modify, and share!
 
 ## 🍸 Добро пожаловать, командир
 
-**Welcome to Dionysus.** This rice represents hundreds of hours of refinement for the perfect Hyprland experience on MacBook Pro T2.
+**Welcome to Balder.** This rice represents hundreds of hours of refinement for the perfect Hyprland experience on MacBook Pro T2.
 
-Originally built for ASUS ROG Zephyrus G15, fully migrated to T2 hardware, and now open-sourced for the community.
+Originally built for ASUS ROG Zephyrus G15 (formerly known as Dionysus), fully migrated to T2 hardware, and now open-sourced for the community.
 
 **Fork it. Customize it. Make it yours.**
 

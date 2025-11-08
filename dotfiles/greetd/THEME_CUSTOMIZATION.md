@@ -147,7 +147,7 @@ Add graphical user selection:
 #### Custom Greeting
 Replace default greeting:
 ```bash
---greeting "Welcome to Dionysus"
+--greeting "Welcome to Balder"
 ```
 
 #### Custom Asterisk Characters

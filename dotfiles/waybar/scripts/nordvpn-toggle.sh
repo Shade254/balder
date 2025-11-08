@@ -1,7 +1,7 @@
 #!/bin/bash
 # ──────────────────────────────────────────────────────────────────────────
 #  nordvpn-toggle.sh - NordVPN Connection Toggle for Waybar
-#  Part of Balder Dotfiles - Dionysus Edition
+#  Part of Balder Dotfiles - Balder Edition
 # ──────────────────────────────────────────────────────────────────────────
 # Description: Toggle NordVPN connection on/off with smart reconnection
 # Usage: Called by Waybar `custom/vpn` on click

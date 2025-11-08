@@ -1,7 +1,7 @@
 #!/bin/bash
 # ──────────────────────────────────────────────────────────────────────────
 #  °˖* ૮( • ᴗ ｡)っ🍸 Balder Dotfiles Deployment Script
-#  Dionysus vers. 1.0 - MacBook Pro 2018 Touchbar Edition
+#  Balder v1.0 - MacBook Pro 2018 Touchbar Edition
 # ──────────────────────────────────────────────────────────────────────────
 #
 #  Deploy dotfiles by creating symlinks from ~/.config to this repo.
@@ -295,7 +295,7 @@ main() {
     echo "  4. Test screen lock with Cmd+L (Super+L)"
     echo "  5. Your wallpaper and statusbar should now be visible!"
     echo ""
-    echo -e "${GREEN}🍸 Welcome to Dionysus - MacBook T2 Edition!${NC}"
+    echo -e "${GREEN}🍸 Welcome to Balder - MacBook T2 Edition!${NC}"
 }
 
 # Run main function

@@ -456,4 +456,4 @@ Found a bug? Improved something? **Pull requests welcome!**
 
 **Fork, modify, share.** That's the Unix way.
 
-🍸 **Welcome to the Dionysus experience. Enjoy your rice!**
+🍸 **Welcome to the Balder experience. Enjoy your rice!**

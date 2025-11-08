@@ -1,7 +1,7 @@
 # Rofi Config 
 
 ───────────────────────────────────────────────  
- °˖* ૮( • ᴗ ｡)っ🍸 shheersh - Dionysus vers. 1.0   
+ °˖* ૮( • ᴗ ｡)っ🍸 shheersh - Balder v1.0   
  ───────────────────────────────────────────────  
 
 ## Custom config for **Rofi**.

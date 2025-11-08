@@ -365,4 +365,4 @@ This rice now serves as both a daily driver configuration and a template for fut
 
 **Next MacBook:** Clone repo, adjust monitor settings, extract WiFi firmware, deploy. Done.
 
-🍸 **Добро пожаловать, командир. Welcome to Dionysus.**
+🍸 **Добро пожаловать, командир. Welcome to Balder** (formerly known as Dionysus during the migration period).
