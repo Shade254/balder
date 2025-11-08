@@ -4,6 +4,20 @@
 
 export PATH="$HOME/.local/bin:$PATH"
 
+# ==================
+# GPU Hardware Acceleration
+# ==================
+# Intel Iris Plus 655 - VA-API & Vulkan acceleration
+export LIBVA_DRIVER_NAME=iHD              # Use intel-media-driver (modern iHD, not legacy i965)
+
+# Firefox optimizations
+export MOZ_DISABLE_RDD_SANDBOX=1          # Allow Firefox GPU access for hardware decode
+export MOZ_USE_XINPUT2=1                  # Smooth scrolling in Firefox
+export MOZ_ENABLE_WAYLAND=1               # Wayland support (already enabled globally)
+
+# Chromium/Chrome optimizations
+export CHROMIUM_FLAGS="--enable-features=VaapiVideoDecoder,VaapiVideoEncoder --enable-gpu-rasterization --enable-zero-copy --use-vulkan=native"
+
 # Pyenv (optional, only if installed)
 if command -v pyenv >/dev/null 2>&1; then
   export PYENV_ROOT="$HOME/.pyenv"
@@ -31,7 +45,10 @@ fi
 # ==================
 #  Prompt
 # ==================
-PROMPT='%F{cyan}arch_t2_miro%f %F{black}❯%f '
+# Show: username + current directory + arrow
+# %~ shows current directory (~ for home, otherwise full path)
+# %c shows just folder name
+PROMPT='%F{cyan}arch_t2_miro%f %F{blue}%~%f %F{black}❯%f '
 
 # Syntax highlighting / autosuggestions
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
@@ -46,6 +63,18 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
   source "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"
 
 autoload -Uz compinit && compinit -C   # cache completions
+
+# ==================
+# Yazi - cd on exit
+# ==================
+function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
 
 
 # ==================
