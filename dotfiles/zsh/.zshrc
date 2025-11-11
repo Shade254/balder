@@ -16,7 +16,8 @@ export MOZ_USE_XINPUT2=1                  # Smooth scrolling in Firefox
 export MOZ_ENABLE_WAYLAND=1               # Wayland support (already enabled globally)
 
 # Chromium/Chrome optimizations
-export CHROMIUM_FLAGS="--enable-features=VaapiVideoDecoder,VaapiVideoEncoder --enable-gpu-rasterization --enable-zero-copy --use-vulkan=native"
+# Note: Vulkan disabled - incompatible with Wayland in Chromium (causes white screen)
+export CHROMIUM_FLAGS="--enable-features=VaapiVideoDecoder,VaapiVideoEncoder,VaapiIgnoreDriverChecks,CanvasOopRasterization,UseSkiaRenderer --enable-gpu-rasterization --enable-zero-copy"
 
 # Pyenv (optional, only if installed)
 if command -v pyenv >/dev/null 2>&1; then
