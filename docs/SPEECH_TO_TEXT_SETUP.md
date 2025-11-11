@@ -2,17 +2,17 @@
 
 **Implementation Date**: 2025-11-11
 **Status**: ✅ Production Ready
-**Method**: Hold-to-Record with Whisper Base Model
+**Method**: Toggle Recording with Whisper Base Model
 
 ---
 
 ## 🎯 Overview
 
-Voice dictation system for Hyprland using local Whisper AI model. Press and hold CMD+M to record, release to transcribe and type the text automatically.
+Voice dictation system for Hyprland using local Whisper AI model. Press CMD+M once to start recording, press CMD+M again to stop recording and transcribe the text automatically.
 
 ### Key Features
 
-- ✅ **Hold-to-Record**: Natural push-to-talk interface
+- ✅ **Toggle Recording**: Press once to start, press again to stop
 - ✅ **100% Offline**: No cloud services, complete privacy
 - ✅ **Fast Transcription**: Model preloaded in memory (~150MB RAM)
 - ✅ **Audio Feedback**: Beeps on start/stop recording
@@ -26,14 +26,14 @@ Voice dictation system for Hyprland using local Whisper AI model. Press and hold
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ User holds CMD+M                                            │
+│ User presses CMD+M (first press)                           │
 └────────────────┬────────────────────────────────────────────┘
                  │
                  ▼
 ┌─────────────────────────────────────────────────────────────┐
-│ Hyprland Keybind (bind + bindr)                            │
-│ - bind:  Triggers speech-start.sh (on press)               │
-│ - bindr: Triggers speech-stop.sh (on release)              │
+│ Hyprland Keybind (single bind)                             │
+│ - Triggers speech-toggle.sh                                │
+│ - Script checks state file to determine start/stop         │
 └────────────────┬────────────────────────────────────────────┘
                  │
                  ▼
@@ -48,9 +48,9 @@ Voice dictation system for Hyprland using local Whisper AI model. Press and hold
                  ▼
 ┌─────────────────────────────────────────────────────────────┐
 │ Workflow                                                    │
-│ 1. START command → Begin pw-record in background           │
-│ 2. User speaks while holding key                           │
-│ 3. STOP command → Kill pw-record, transcribe audio         │
+│ 1. First press: START command → Begin pw-record            │
+│ 2. User speaks (notification shows "Press CMD+M to stop")  │
+│ 3. Second press: STOP command → Kill pw-record, transcribe │
 │ 4. Return transcribed text via socket                      │
 │ 5. wtype injects text at cursor position                   │
 └─────────────────────────────────────────────────────────────┘
@@ -77,33 +77,31 @@ Voice dictation system for Hyprland using local Whisper AI model. Press and hold
 - CPU: Near-zero idle, spikes during transcription
 - Auto-starts on login
 
-### 2. Start Script (`speech-start.sh`)
+### 2. Toggle Script (`speech-toggle.sh`)
 
-**Location**: `~/.config/hypr/scripts/speech-start.sh`
+**Location**: `~/.config/hypr/scripts/speech-toggle.sh`
 
-**Triggered**: When CMD+M is **pressed**
+**Triggered**: When CMD+M is **pressed** (every time)
 
-**Actions**:
-1. Play start beep (`granted-04.wav`)
-2. Show persistent notification "🎙️ Recording..."
-3. Send START command to daemon
-4. Daemon begins pw-record in background
+**First Press (Start Recording)**:
+1. Check state file - if missing, start recording
+2. Play start beep (`granted-04.wav`)
+3. Show persistent notification "🎙️ Recording... Press CMD+M again to stop"
+4. Send START command to daemon
+5. Daemon begins pw-record in background
+6. Create state file to track recording
 
-### 3. Stop Script (`speech-stop.sh`)
+**Second Press (Stop Recording)**:
+1. Check state file - if exists, stop recording
+2. Remove state file
+3. Update notification to "✨ Transcribing..."
+4. Send STOP command to daemon
+5. Daemon stops recording, transcribes, returns text
+6. Play end beep (`beepbeep.wav`)
+7. Inject text via `wtype`
+8. Show success notification with transcribed text
 
-**Location**: `~/.config/hypr/scripts/speech-stop.sh`
-
-**Triggered**: When CMD+M is **released**
-
-**Actions**:
-1. Update notification to "✨ Transcribing..."
-2. Send STOP command to daemon
-3. Daemon stops recording, transcribes, returns text
-4. Play end beep (`beepbeep.wav`)
-5. Inject text via `wtype`
-6. Show success notification with transcribed text
-
-### 4. Python Daemon (`speech-daemon.py`)
+### 3. Python Daemon (`speech-daemon.py`)
 
 **Location**: `~/.config/hypr/scripts/speech-daemon.py`
 
@@ -127,9 +125,8 @@ Voice dictation system for Hyprland using local Whisper AI model. Press and hold
 ### Hyprland Keybinds
 
 ```conf
-# Speech-to-Text (Hold CMD+M to record)
-bind  = SUPER, M, exec, ~/.config/hypr/scripts/speech-start.sh
-bindr = SUPER, M, exec, ~/.config/hypr/scripts/speech-stop.sh
+# Speech-to-Text (Press CMD+M to toggle recording)
+bind = SUPER, M, exec, ~/.config/hypr/scripts/speech-toggle.sh
 ```
 
 ### Systemd Service
@@ -190,11 +187,11 @@ Located at: `/home/miro/faster-whisper-dictation/venv`
 ### Basic Usage
 
 1. **Focus** any text input field (terminal, browser, editor, chat)
-2. **Press and HOLD** CMD+M (SUPER+M)
+2. **Press CMD+M once** (first press starts recording)
    - 🔊 Start beep plays
-   - 💬 "🎙️ Recording..." notification appears
-3. **Speak clearly** into microphone
-4. **Release** CMD+M when done
+   - 💬 "🎙️ Recording... Press CMD+M again to stop" notification appears
+3. **Speak clearly** into microphone (as long as you need)
+4. **Press CMD+M again** (second press stops recording)
    - 🔊 End beep plays
    - 💬 "✨ Transcribing..." notification
    - Text appears at cursor
@@ -203,10 +200,11 @@ Located at: `/home/miro/faster-whisper-dictation/venv`
 ### Tips for Best Results
 
 - **Speak clearly** at normal conversation volume
-- **Hold for at least 0.5 seconds** (minimum duration)
+- **Record for at least 0.5 seconds** (minimum duration)
 - **Natural speech** works best - no need to over-enunciate
 - **Background noise** should be minimal for accuracy
 - **Technical terms** may need correction
+- **No time limit** - speak as long as you need, then press CMD+M to stop
 
 ---
 
@@ -298,9 +296,9 @@ sock.close()
 
 ### "Recording too short" Error
 
-**Symptom**: Release key immediately, get error
+**Symptom**: Press CMD+M twice very quickly, get error
 
-**Solution**: Hold CMD+M for at least 0.5 seconds while speaking
+**Solution**: Speak for at least 0.5 seconds before pressing CMD+M the second time
 
 ### Text Has Extra Characters
 
@@ -419,12 +417,14 @@ After setup, verify:
 - [ ] Daemon service is running: `systemctl --user status speech-daemon`
 - [ ] Model loaded successfully (check logs for "Model loaded!")
 - [ ] Socket exists: `ls /tmp/speech-to-text.sock`
-- [ ] Hyprland config has both bind and bindr for SUPER+M
-- [ ] Start beep plays when pressing CMD+M
-- [ ] Notification appears while holding key
-- [ ] End beep plays when releasing CMD+M
+- [ ] Hyprland config has toggle bind for SUPER+M
+- [ ] Toggle script exists: `~/.config/hypr/scripts/speech-toggle.sh`
+- [ ] Start beep plays when pressing CMD+M first time
+- [ ] Notification appears "Recording... Press CMD+M again to stop"
+- [ ] End beep plays when pressing CMD+M second time
 - [ ] Text appears at cursor after transcription
 - [ ] No temp files left behind: `ls /tmp/speech-*.wav`
+- [ ] State file cleaned up: `/tmp/speech-recording-state`
 - [ ] Service auto-starts on login
 
 ---
