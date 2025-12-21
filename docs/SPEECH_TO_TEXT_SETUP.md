@@ -13,6 +13,7 @@ Voice dictation system for Hyprland using local Whisper AI model. Press CMD+M on
 ### Key Features
 
 - ✅ **Toggle Recording**: Press once to start, press again to stop
+- ✅ **Auto Language Detection**: Automatically uses your current keyboard layout language
 - ✅ **100% Offline**: No cloud services, complete privacy
 - ✅ **Fast Transcription**: Model preloaded in memory (~150MB RAM)
 - ✅ **Audio Feedback**: Beeps on start/stop recording
@@ -205,6 +206,45 @@ Located at: `/home/miro/faster-whisper-dictation/venv`
 - **Background noise** should be minimal for accuracy
 - **Technical terms** may need correction
 - **No time limit** - speak as long as you need, then press CMD+M to stop
+- **Language switching**: Press CTRL+SPACE to switch keyboard layout, then dictate in that language
+
+### Multi-Language Support
+
+The daemon automatically detects your current keyboard layout and uses the corresponding language for transcription:
+
+**How it works**:
+1. When you press CMD+M to stop recording, the daemon queries Hyprland for your active keyboard layout
+2. It maps the layout code to a Whisper language code (us→en, cz→cs, de→de, etc.)
+3. Transcription uses that specific language for better accuracy
+
+**Switching languages**:
+1. Press **CTRL+SPACE** to cycle through your keyboard layouts (configured in Hyprland)
+2. Current layouts: **us** (English) ↔ **cz** (Czech)
+3. Start dictation - the daemon will automatically use the active layout's language
+
+**Supported layouts**:
+- `us`/`gb` → English
+- `cz` → Czech
+- `de` → German
+- `es` → Spanish
+- `fr` → French
+- `it` → Italian
+- `pl` → Polish
+- `pt` → Portuguese
+- `ru` → Russian
+- And 10+ more (see speech-daemon.py for full list)
+
+**Viewing detected language**:
+Check the daemon logs to see which language was detected:
+```bash
+journalctl --user -u speech-daemon -f
+```
+
+You'll see messages like:
+```
+Detected keyboard layout: us → language: en
+Transcription complete (language: en): Hello world...
+```
 
 ---
 
@@ -361,10 +401,11 @@ sock.close()
 
 ### Model Details
 
-- **Model**: Whisper base (English)
+- **Model**: Whisper base (multilingual)
 - **Size**: ~142MB
 - **Accuracy**: ~95% for clear speech
-- **Language**: English-optimized (can detect others with lower accuracy)
+- **Language**: Auto-detected from keyboard layout (us→en, cz→cs, etc.)
+- **Supported Languages**: 20+ languages including English, Czech, German, Spanish, French, Italian, Polish, Portuguese, Russian, Japanese, Chinese, Korean
 
 ---
 
@@ -374,7 +415,7 @@ sock.close()
 
 1. **GPU Acceleration**: Use CUDA/ROCm if available
 2. **Model Selection**: Allow switching between tiny/base/small models
-3. **Language Selection**: Multi-language support
+3. ~~**Language Selection**: Multi-language support~~ ✅ **IMPLEMENTED** (auto-detects from keyboard layout)
 4. **Custom Vocabulary**: Train on technical terms
 5. **Punctuation Commands**: "period", "comma", "new line"
 6. **Correction Mode**: Re-record last phrase
@@ -384,7 +425,7 @@ sock.close()
 ### Known Limitations
 
 - Fixed model (base) - no runtime model switching
-- English-optimized - other languages less accurate
+- ~~English-only~~ Now supports 20+ languages via keyboard layout detection
 - No real-time streaming - must finish recording first
 - No custom wake words or activation phrases
 - No integration with text editors for context-aware completion

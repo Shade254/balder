@@ -5,8 +5,8 @@
 #  - Monitors Hyprland events to wake screen on ANY input (keyboard/mouse)
 # ══════════════════════════════════════════════════════════════════════════════
 
-# Turn screen on before showing lock (in case it was off)
-hyprctl dispatch dpms on
+# Turn ALL screens on before showing lock (in case they were off)
+~/.config/hypr/scripts/wake-all-displays.sh
 
 # Start hyprlock in background
 hyprlock &
@@ -17,9 +17,12 @@ HYPRLOCK_PID=$!
     # Wait 90 seconds (1m30s) before turning screen off
     sleep 90
 
-    # If still locked, turn screen off
+    # If still locked, turn ALL screens off
     if pgrep -x hyprlock > /dev/null; then
-        hyprctl dispatch dpms off
+        # Turn off all monitors
+        hyprctl monitors -j | jq -r '.[].name' | while read -r monitor; do
+            hyprctl dispatch dpms off "$monitor"
+        done
 
         # NOW THE CRITICAL FIX: Monitor Hyprland events for input
         # This listens to Hyprland's event socket and wakes screen on ANY input
@@ -31,11 +34,11 @@ HYPRLOCK_PID=$!
                     break
                 fi
 
-                # On ANY event (keyboard, mouse, etc), check if screen is off
-                # If off, turn it back on!
-                DPMS_STATUS=$(hyprctl monitors -j | jq -r '.[0].dpmsStatus' 2>/dev/null)
-                if [[ "$DPMS_STATUS" == "false" ]]; then
-                    hyprctl dispatch dpms on
+                # On ANY event (keyboard, mouse, etc), check if ANY screen is off
+                # If ANY off, wake ALL displays!
+                ANY_OFF=$(hyprctl monitors -j | jq -r 'any(.dpmsStatus == false)' 2>/dev/null)
+                if [[ "$ANY_OFF" == "true" ]]; then
+                    ~/.config/hypr/scripts/wake-all-displays.sh
                 fi
             done
         fi
@@ -50,5 +53,5 @@ wait $HYPRLOCK_PID
 kill $MONITOR_PID 2>/dev/null
 wait $MONITOR_PID 2>/dev/null
 
-# Ensure screen is on after unlocking
-hyprctl dispatch dpms on
+# Ensure ALL screens are on after unlocking
+~/.config/hypr/scripts/wake-all-displays.sh

@@ -33,9 +33,8 @@ Rice configuration for **Hyprland** on Arch Linux,
 optimized for **MacBook Pro 2018 T2** (_balder_). 
 
 ## Features
-  - Animated **Neofetch**  
-  - Dynamic **Waybar**  
-  - ASCII **Cava Visualizer**  
+  - Animated **Neofetch**
+  - Dynamic **Waybar**
   - Nord-inspired **neon-radioactive theme**  
 
 ## Demo
@@ -46,20 +45,17 @@ optimized for **MacBook Pro 2018 T2** (_balder_).
 ![Eww HUD](../assets/demo-eww.png)
 ### Rofi
 ![Rofi Demo](../assets/demo-rofi.png)
-### Cava
-![Cava Visualizer](../assets/demo-cava.gif)
 ### Alacritty + Waybar
 ![Alacritty](../assets/demo-alacritty.png)
 
 ##  Contents
-- [alacritty](alacritty/) → terminal config  
-- [cava](cava/) → audio visualizer  
-- [eww](eww/) → HUD & widgets  
-- [firefox](firefox/) → browser theme  
-- [hypr](hypr/) → window manager  
-- [neofetch](neofetch/) → animated fetch  
-- [rofi](rofi/) → launcher + powermenu  
-- [waybar](waybar/) → status bar  
+- [alacritty](alacritty/) → terminal config
+- [eww](eww/) → HUD & widgets
+- [firefox](firefox/) → browser theme
+- [hypr](hypr/) → window manager
+- [neofetch](neofetch/) → animated fetch
+- [rofi](rofi/) → launcher + powermenu
+- [waybar](waybar/) → status bar
 - [zsh](zsh/) → shell configs  
 
 

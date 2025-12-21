@@ -23,11 +23,12 @@ fi
 index=$(( (index + 1) % ${#SPIN[@]} ))
 echo "$index" > "$cache"
 
-# Get RPM
-if [ "$fan" = "cpu" ]; then
-  rpm=$(sensors | grep -i 'cpu_fan' | awk '{print $2}')
-elif [ "$fan" = "gpu" ]; then
-  rpm=$(sensors | grep -i 'gpu_fan' | awk '{print $2}')
+# Get RPM - T2 Mac uses fan1 (left) and fan2 (right)
+# Supports both legacy (cpu/gpu) and new (left/right) params
+if [ "$fan" = "left" ] || [ "$fan" = "cpu" ]; then
+  rpm=$(sensors | grep -E '^fan1:' | awk '{print $2}')
+elif [ "$fan" = "right" ] || [ "$fan" = "gpu" ]; then
+  rpm=$(sensors | grep -E '^fan2:' | awk '{print $2}')
 else
   rpm=0
 fi

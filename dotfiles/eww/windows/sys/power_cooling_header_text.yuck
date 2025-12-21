@@ -11,13 +11,6 @@
   :exclusive false
   :focusable false
 
-  ;; Switch to horizontal to place boxes side by side
-  (box :orientation "horizontal" :halign "center" :space "12px"
-    ;; First box: POWER GRID
+  (box :orientation "horizontal" :halign "center" :spacing 12
     (label :text "[ POWER GRID ]" :class "stats-label3")
-
-    ;; Second box: another label, e.g. MODE STATUS
-    (label :text "[ COOLING ]" :class "stats-label3" :halign "center")
-  )
-)
-
+    (label :text "[ COOLING ]" :class "stats-label3" :halign "center")))

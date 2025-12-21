@@ -6,31 +6,6 @@
 // ──────────────────────────────────────────────────────────────────────────
 
 
-// ── Visualizer ────────────────────────────────────────────────────────────
-.visualizer-container {
-  background-color: transparent;
-}
-
-.visualizer {
-  color: #08c0d0; // Nord Cyan
-  font-family: monospace;
-  background-color: transparent;
-  font-size: 9px;
-}
-
-.visualizer-container {
-  border-radius: 2px;
-  background: linear-gradient(to top, rgba(25,25,25,0.5), rgba(25,25,25,0));
-  padding: 4px;
-}
-
-.visualizer-text {
-  font-family: monospace;
-  font-size: 8px;
-  color: #56b6c2;
-}
-
-
 // ── Windows ───────────────────────────────────────────────────────────────
 window {
   background-color: transparent;
@@ -88,21 +63,11 @@ window {
 .module-frame {
   border: 2px solid #61afef;
   border-radius: 2px;
-  margin-bottom: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 5px;
-  min-height: 10px;
-  min-width: 140px;
-}
-
-.module-frame {
-  border: 2px solid #61afef;
-  border-radius: 2px;
   margin: 5px;
+  margin-left: 0px;
   padding: 1px;
   min-height: 10px;
-  min-width: 140px;
+  min-width: 130px;
   background-image: linear-gradient(to left, rgba(0,0,0,0.4), rgba(0,0,0,0));
   transition: all 0.2s ease-in-out;
 }
@@ -200,18 +165,19 @@ window {
 }
 
 .ram-bar {
-  font-size: 20px;
+  font-size: 16px;
   font-family: monospace;
   color: #9cdef2;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   padding: 2px 2px;
 }
 
 .ram-bar2 {
   color: #9cdef2;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   padding: 1px 1px;
-  font-size: 10px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .ram-bar4 {
@@ -349,7 +315,7 @@ $window_visible: true;
   font-size: 14px;
   padding: 4px;
   border-radius: 0px;
-  color: #9cdef2;
+  color: #fab387;  /* Orange - Cyrillic workspace indicator */
 }
 
 .log-line {

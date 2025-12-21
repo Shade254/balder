@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
 #  net_vpn.sh
-#  Checks if VPN (10.6.0.x) is active, outputs 100 (on) or 0 (off).
-#  Example: VPN connected  → 100
-#           VPN disconnected → 0
+#  Checks if NordVPN is connected, outputs 100 (on) or 0 (off).
+#  T2 Mac version - uses NordVPN CLI
 # ─────────────────────────────────────────────────────────────────────────────
 
-if ip a | grep -q "10\.6\."; then
+status=$(nordvpn status 2>/dev/null | grep -i "status" | head -1 | awk '{print $2}')
+
+if [[ "$status" == "Connected" ]]; then
   echo 100
 else
   echo 0

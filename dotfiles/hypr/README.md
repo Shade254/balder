@@ -5,7 +5,7 @@
  ───────────────────────────────────────────────  
  
 ## Custom **hyprland** config
-Tuned for EWW integration, CAVA visualizer, and Waybar  
+Tuned for EWW integration and Waybar  
 ![Hyprland Demo](../../assets/demo-hypr.gif)  
 ---
 
@@ -31,8 +31,7 @@ hyprland/
 ## Requirements
   - **Hyprland** (Wayland compositor & WM)
   - **Hyprpaper** (wallpaper daemon for Hyprland)
-  - **eww** (Elkowar’s Wacky Widgets)
-  - **cava** (audio visualizer)
+  - **eww** (Elkowar's Wacky Widgets)
   - **rofi** (application launcher)
   - **alacritty** (terminal emulator)
   - **thunar** (file manager)
@@ -52,8 +51,6 @@ This config ties into your other dotfiles:
 
 - **Waybar/Eww** → via [`waybar_watcher.sh`](scripts/waybar_watcher.sh)
   Keeps Waybar and EWW and hyprpaper running reliably under Hyprland.
-- **CAVA Visualizer** → launched on login, outputs ASCII to `/tmp/cava.raw`
-  Integrated with EWW via `audio_visualizer.py`.
 
 ## MacBook Pro 2018 T2 Configuration
 

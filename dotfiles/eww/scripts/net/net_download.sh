@@ -9,7 +9,7 @@
 #
 # ─────────────────────────────────────────────────────────────────────────────
 
-iface="wlp4s0"   # Wi-Fi interface
+iface="wlan0"    # T2 Mac Wi-Fi interface
 max_speed=12500000   # adjust: this is 100 Mbps (100*1e6 / 8)
 
 # First sample

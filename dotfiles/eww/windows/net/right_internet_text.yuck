@@ -1,6 +1,6 @@
 ;; ── right internet text ───────────────────────────────────────────────────
 ;; Text displaying ping and vpn status
-;; Anchored top very bottom right
+;; Anchored bottom
 
 (defwindow right_internet_text
   :visible show_eww
@@ -11,14 +11,9 @@
   :exclusive false
   :focusable false
 
-  (box :class "internet-clean-box" :orientation "vertical" :halign "center" :space "8px"
-    (box :orientation "horizontal" :halign "center" :space "6px"
+  (box :class "internet-clean-box" :orientation "vertical" :halign "center" :spacing 8
+    (box :orientation "horizontal" :halign "center" :spacing 6
       (label :text download_speed :class "label-primary2")
       (label :text upload_speed :class "label-primary2")
       (label :text ping_ms :class "label-primary2")
-      (label :text vpn_status_text :class "label-primary2")
-
-    )
-  )
-)
-
+      (label :text vpn_status_text :class "label-primary2"))))

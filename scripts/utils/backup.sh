@@ -5,8 +5,9 @@
 # ──────────────────────────────────────────────────────────────────────────
 
 # Source logging utilities
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/logging.sh"
+# Get the utils directory, not the balder root
+UTILS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$UTILS_DIR/logging.sh"
 
 # Backup directory
 BACKUP_DIR="${BACKUP_DIR:-$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)}"

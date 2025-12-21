@@ -10,11 +10,15 @@ brightness=$(brightnessctl --device='acpi_video0' get)
 max_brightness=$(brightnessctl --device='acpi_video0' max)
 percent=$((brightness * 100 / max_brightness))
 
-# Build ASCII bar
+# Build ASCII bar (10 segments)
 filled=$((percent / 10))
+[ "$filled" -gt 10 ] && filled=10
 empty=$((10 - filled))
-bar=$(printf '█%.0s' $(seq 1 $filled))
-pad=$(printf '░%.0s' $(seq 1 $empty))
+
+bar=""
+pad=""
+[ "$filled" -gt 0 ] && bar=$(printf '█%.0s' $(seq 1 $filled))
+[ "$empty" -gt 0 ] && pad=$(printf '░%.0s' $(seq 1 $empty))
 ascii_bar="[$bar$pad]"
 
 # Icon

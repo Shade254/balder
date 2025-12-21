@@ -3,6 +3,7 @@
 Speech-to-Text Daemon with Hold-to-Record Support
 Keeps Whisper model loaded in memory for instant transcription
 Supports START/STOP commands for push-to-talk recording
+Auto-detects keyboard layout for multi-language support
 """
 
 import socket
@@ -12,6 +13,7 @@ import tempfile
 import subprocess
 import signal
 import time
+import json
 from pathlib import Path
 import threading
 
@@ -22,6 +24,32 @@ from faster_whisper import WhisperModel
 
 SOCKET_PATH = "/tmp/speech-to-text.sock"
 MIN_RECORDING_DURATION = 0.5  # seconds - minimum recording length
+
+# Keyboard layout to Whisper language code mapping
+# See: https://github.com/openai/whisper/blob/main/whisper/tokenizer.py
+LAYOUT_TO_LANGUAGE = {
+    "us": "en",      # English (US)
+    "gb": "en",      # English (UK)
+    "cz": "cs",      # Czech
+    "de": "de",      # German
+    "es": "es",      # Spanish
+    "fr": "fr",      # French
+    "it": "it",      # Italian
+    "pl": "pl",      # Polish
+    "pt": "pt",      # Portuguese
+    "ru": "ru",      # Russian
+    "jp": "ja",      # Japanese
+    "cn": "zh",      # Chinese
+    "kr": "ko",      # Korean
+    "nl": "nl",      # Dutch
+    "tr": "tr",      # Turkish
+    "se": "sv",      # Swedish
+    "no": "no",      # Norwegian
+    "dk": "da",      # Danish
+    "fi": "fi",      # Finnish
+}
+
+KEYBOARD_DEVICE_NAME = "apple-inc.-apple-internal-keyboard-/-trackpad"
 
 class SpeechDaemon:
     def __init__(self, model_size="base", device="cpu", compute_type="int8"):
@@ -34,6 +62,44 @@ class SpeechDaemon:
         self.recording_file = None
         self.recording_start_time = None
         self.state_lock = threading.Lock()
+
+    def detect_keyboard_language(self):
+        """Detect current keyboard layout and map to Whisper language code"""
+        try:
+            # Get keyboard device info from Hyprland
+            result = subprocess.run(
+                ['hyprctl', 'devices', '-j'],
+                capture_output=True,
+                text=True,
+                timeout=1
+            )
+
+            if result.returncode != 0:
+                print(f"Warning: Could not get keyboard info, defaulting to English", flush=True)
+                return "en"
+
+            devices = json.loads(result.stdout)
+
+            # Find the Apple keyboard device
+            for kbd in devices.get('keyboards', []):
+                if kbd.get('name') == KEYBOARD_DEVICE_NAME:
+                    # Get the active layout
+                    layouts = kbd.get('layout', '').split(', ')
+                    active_index = kbd.get('active_layout_index', 0)
+
+                    if active_index < len(layouts):
+                        active_layout = layouts[active_index].strip()
+                        language = LAYOUT_TO_LANGUAGE.get(active_layout, "en")
+                        print(f"Detected keyboard layout: {active_layout} → language: {language}", flush=True)
+                        return language
+
+            # Fallback to English if device not found
+            print(f"Warning: Keyboard device not found, defaulting to English", flush=True)
+            return "en"
+
+        except Exception as e:
+            print(f"Error detecting keyboard layout: {e}, defaulting to English", flush=True)
+            return "en"
 
     def start_recording(self):
         """Start recording audio in background"""
@@ -109,10 +175,20 @@ class SpeechDaemon:
             return audio_file, "OK"
 
     def transcribe(self, audio_path):
-        """Transcribe audio file using loaded model"""
+        """Transcribe audio file using loaded model with auto-detected language"""
         try:
-            segments, info = self.model.transcribe(audio_path, beam_size=5)
+            # Detect keyboard layout to determine language
+            language = self.detect_keyboard_language()
+
+            # Transcribe with detected language
+            segments, info = self.model.transcribe(
+                audio_path,
+                language=language,
+                beam_size=5
+            )
+
             text = " ".join([segment.text for segment in segments])
+            print(f"Transcription complete (language: {language}): {text[:50]}...", flush=True)
             return text.strip()
         except Exception as e:
             print(f"Transcription error: {e}", flush=True)

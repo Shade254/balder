@@ -25,11 +25,15 @@ else
   icon=""
 fi
 
-# ASCII bar
+# ASCII bar (10 segments, capped for display but vol_int can exceed 100%)
 filled=$((vol_int / 10))
+[ "$filled" -gt 10 ] && filled=10
 empty=$((10 - filled))
-bar=$(printf '█%.0s' $(seq 1 $filled))
-pad=$(printf '░%.0s' $(seq 1 $empty))
+
+bar=""
+pad=""
+[ "$filled" -gt 0 ] && bar=$(printf '█%.0s' $(seq 1 $filled))
+[ "$empty" -gt 0 ] && pad=$(printf '░%.0s' $(seq 1 $empty))
 ascii_bar="[$bar$pad]"
 
 # Color logic

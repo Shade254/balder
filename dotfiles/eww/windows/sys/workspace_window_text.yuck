@@ -3,15 +3,12 @@
 ;; Anchored top middle
 
 (defwindow workspace_window_text
-  :anchor "center"
+  :anchor "top left"
   :monitor 0
-  :geometry (geometry :x "9px" :y "300px" :width "420px" :height "220px")
+  :geometry (geometry :x "0px" :y "103px" :width "343px" :height "220px")
   :stacking "bg"
   :exclusive false
   :focusable false
 
   (box :orientation "vertical" :halign "center"
-    (label :text reactor_core_layout :class "ascii-core-status2")
-  )
-)
-
+    (label :text reactor_core_layout :class "ascii-core-status2")))

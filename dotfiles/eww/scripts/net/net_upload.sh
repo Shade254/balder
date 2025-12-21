@@ -5,7 +5,7 @@
 #  as a percentage (0–100) of a configured max speed.
 # ─────────────────────────────────────────────────────────────────────────────
 
-iface="wlp4s0"        # your active Wi-Fi interface (from `ip -br link`)
+iface="wlan0"         # T2 Mac Wi-Fi interface (from `ip -br link`)
 max_speed=12500000    # 100 Mbps = 100e6 / 8 (bytes/sec). Adjust if faster.
 
 # First sample
