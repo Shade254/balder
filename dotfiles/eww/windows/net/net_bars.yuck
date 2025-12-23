@@ -1,39 +1,43 @@
 ;; ── net bars ───────────────────────────────────────────────────
-;; Text header and vectors showing network info
-;; Anchored bottom
+;; Network monitoring bars: Download, Upload, Latency, VPN
+;; Each column contains: label header, bar visualization, value text
+;; All styling via CSS classes (no inline styles)
 
 (defwindow net_bars
   :visible show_eww
   :anchor "top left"
   :monitor 0
-  :geometry (geometry :x "9px" :y "638px" :width "420px" :height "120px")
+  :geometry (geometry :x "7px" :y "935px" :width "330px" :height "120px")
   :stacking "bg"
   :exclusive false
   :focusable false
 
-  ;; Horizontal layout for side-by-side bars
-  (box :orientation "horizontal" :halign "center" :spacing 10
+  (box :orientation "horizontal" :halign "center" :spacing 3 :valign "start"
 
     ;; DOWNLOAD BAR
-    (box :orientation "vertical" :halign "center"
-      (label :text "[ DOWNLOAD ]" :style "margin-top: 160px;" :class "stats-label")
-      (box :class "module-frame2"
-        (label :text download_bar :class "ram-bar")))
+    (box :orientation "vertical" :halign "center" :valign "start" :spacing 5 :space-evenly false :class "net-bar-column"
+      (label :text "[ DOWNLOAD ]" :class "net-bar-label")
+      (box :class "net-bar-frame" :halign "center"
+        (label :markup download_bar :class "net-bar-content"))
+      (label :text download_speed :class "net-value-label"))
 
     ;; UPLOAD BAR
-    (box :orientation "vertical" :halign "center" :style "min-width: 81px;"
-      (label :text "[ UPLOAD ]" :style "margin-top: 160px;" :class "stats-label")
-      (box :class "module-frame2"
-        (label :text upload_bar :class "ram-bar")))
+    (box :orientation "vertical" :halign "center" :valign "start" :spacing 5 :space-evenly false :class "net-bar-column"
+      (label :text "[ UPLOAD ]" :class "net-bar-label")
+      (box :class "net-bar-frame" :halign "center"
+        (label :markup upload_bar :class "net-bar-content"))
+      (label :text upload_speed :class "net-value-label"))
 
     ;; LATENCY BAR
-    (box :orientation "vertical" :halign "center"
-      (label :text "[ LATENCY ]" :style "margin-top: 160px;" :class "stats-label")
-      (box :class "module-frame2"
-        (label :text ping_bar :class "ram-bar")))
+    (box :orientation "vertical" :halign "center" :valign "start" :spacing 5 :space-evenly false :class "net-bar-column"
+      (label :text "[ LATENCY ]" :class "net-bar-label")
+      (box :class "net-bar-frame" :halign "center"
+        (label :markup ping_bar :class "net-bar-content"))
+      (label :text ping_ms :class "net-value-label"))
 
     ;; VPN BAR
-    (box :orientation "vertical" :halign "center" :style "min-width: 81px;"
-      (label :text "[ VPN ]" :style "margin-top: 160px;" :class "stats-label")
-      (box :class "module-frame2"
-        (label :text vpn_bar :markup true :class "ram-bar")))))
+    (box :orientation "vertical" :halign "center" :valign "start" :spacing 5 :space-evenly false :class "net-bar-column"
+      (label :text "[ VPN ]" :class "net-bar-label")
+      (box :class "net-bar-frame" :halign "center"
+        (label :markup vpn_bar :class "net-bar-content"))
+      (label :text vpn_status_text :class "net-value-label"))))

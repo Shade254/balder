@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
 #  net_vpn.sh
-#  Checks if NordVPN is connected, outputs 100 (on) or 0 (off).
-#  T2 Mac version - uses NordVPN CLI
+#  Checks NordVPN connection status.
+#
+#  Output: "status_text|percent" (pipe-separated)
+#  Connected:    "[ФАНТОМ]|100"
+#  Disconnected: "[нуль]|0"
 # ─────────────────────────────────────────────────────────────────────────────
 
-status=$(nordvpn status 2>/dev/null | grep -i "status" | head -1 | awk '{print $2}')
+status=$(nordvpn status 2>/dev/null | grep -i "^Status:" | awk '{print $2}')
 
 if [[ "$status" == "Connected" ]]; then
-  echo 100
+  echo "[ФАНТОМ]|100"
 else
-  echo 0
+  echo "[НУЛЬ]|0"
 fi

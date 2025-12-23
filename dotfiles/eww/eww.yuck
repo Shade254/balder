@@ -13,24 +13,23 @@
 (include "windows/sys/right_fan_data.yuck")
 (include "windows/net/ascii_decor_frame.yuck")
 (include "windows/net/net_bars.yuck")
-(include "windows/net/right_internet_text.yuck")
 (include "windows/misc/welcome_text.yuck")
 
 ;; === Variables ──────────────────────────────────────────────────────────────
 (defvar max_fan_rpm "5000")
 
 (defvar ascii_decor1 "
--                                                 -
---                                               --
--                                                 -
---                                               --
--                                                 -
---                                               --
--                                                 -
---                                               --
--                                                 -
---                                               --
--                                                 -
+-                                               -
+--                                             --
+-                                               -
+--                                             --
+-                                               -
+--                                             --
+-                                               -
+--                                             --
+-                                               -
+--                                             --
+-                                               -
 ")
 
 ;; === Workspace Status ───────────────────────────────────────────────────────
@@ -99,25 +98,27 @@
   "bash ~/.config/eww/scripts/bar/bar_render.sh $(df / | awk 'NR==2 {print int($3*100/$2)}') || echo 'null'")
 
 ;; === Networking ─────────────────────────────────────────────────────────────
-(defpoll upload_speed :interval "3s"
-  "bash ~/.config/eww/scripts/net/net_upload.sh || echo 'null'")
-(defpoll upload_bar :interval "3s"
-  "bash ~/.config/eww/scripts/net/net_upload.sh | xargs bash ~/.config/eww/scripts/net/net_upload_bar.sh || echo 'null'")
+;; Scripts output "text|percent" format, parsed with cut
 
 (defpoll download_speed :interval "3s"
-  "bash ~/.config/eww/scripts/net/net_download.sh || echo 'null'")
+  "bash ~/.config/eww/scripts/net/net_download.sh | cut -d'|' -f1 || echo '-- КБ'")
 (defpoll download_bar :interval "3s"
-  "bash ~/.config/eww/scripts/net/net_download.sh | xargs bash ~/.config/eww/scripts/net/net_download_bar.sh || echo 'null'")
+  "bash ~/.config/eww/scripts/net/net_download.sh | cut -d'|' -f2 | xargs bash ~/.config/eww/scripts/net/net_download_bar.sh || echo 'null'")
+
+(defpoll upload_speed :interval "3s"
+  "bash ~/.config/eww/scripts/net/net_upload.sh | cut -d'|' -f1 || echo '-- КБ'")
+(defpoll upload_bar :interval "3s"
+  "bash ~/.config/eww/scripts/net/net_upload.sh | cut -d'|' -f2 | xargs bash ~/.config/eww/scripts/net/net_upload_bar.sh || echo 'null'")
 
 (defpoll ping_ms :interval "5s"
-  "bash ~/.config/eww/scripts/net/net_ping.sh || echo 'null'")
+  "bash ~/.config/eww/scripts/net/net_ping.sh | cut -d'|' -f1 || echo '-- мс'")
 (defpoll ping_bar :interval "5s"
-  "bash ~/.config/eww/scripts/net/net_ping.sh | xargs bash ~/.config/eww/scripts/net/net_ping_latency.sh || echo 'null'")
+  "bash ~/.config/eww/scripts/net/net_ping.sh | cut -d'|' -f2 | xargs bash ~/.config/eww/scripts/net/net_ping_latency.sh || echo 'null'")
 
 (defpoll vpn_status_text :interval "5s"
-  "bash ~/.config/eww/scripts/net/net_vpn_status.sh || echo 'null'")
+  "bash ~/.config/eww/scripts/net/net_vpn.sh | cut -d'|' -f1 || echo '[нуль]'")
 (defpoll vpn_bar :interval "5s"
-  "bash ~/.config/eww/scripts/net/net_vpn.sh | xargs bash ~/.config/eww/scripts/net/net_vpn_bar.sh || echo 'null'")
+  "bash ~/.config/eww/scripts/net/net_vpn.sh | cut -d'|' -f2 | xargs bash ~/.config/eww/scripts/net/net_vpn_bar.sh || echo 'null'")
 
 ;; === Time & Date ────────────────────────────────────────────────────────────
 (defpoll welcome_date :interval "30s"

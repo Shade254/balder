@@ -1,0 +1,146 @@
+# ─────────────────────────────────────────────────────────────────────────
+#  °˖* ૮(  • ᴗ ｡)っ🍸  Nord-Inspired Neon Theme for Yazi
+#  Matches your Alacritty aesthetic
+#  Colors: #9cdef2 (light cyan) + #61afef (blue) on #282c34 (dark)
+# ─────────────────────────────────────────────────────────────────────────
+
+[mgr]
+cwd = { fg = "#9cdef2", bold = true }  # Current directory - light cyan
+
+# Highlighting in file list
+hovered = { bg = "#3e4451" }  # Hovered item background
+preview_hovered = { bg = "#3e4451" }  # Preview hovered
+
+# File types (Nord-inspired)
+[filetype]
+rules = [
+    # Directories
+    { mime = "inode/directory", fg = "#61afef", bold = true },  # Blue directories
+
+    # Documents
+    { mime = "text/*", fg = "#9cdef2" },  # Light cyan text
+    { name = "*.md", fg = "#9cdef2" },
+    { name = "*.txt", fg = "#9cdef2" },
+    { name = "README*", fg = "#9cdef2", bold = true },
+
+    # Code files
+    { name = "*.py", fg = "#e5c07b" },  # Yellow
+    { name = "*.js", fg = "#e5c07b" },
+    { name = "*.ts", fg = "#e5c07b" },
+    { name = "*.jsx", fg = "#e5c07b" },
+    { name = "*.tsx", fg = "#e5c07b" },
+    { name = "*.rs", fg = "#e06c75" },  # Red
+    { name = "*.go", fg = "#61afef" },  # Blue
+    { name = "*.sh", fg = "#98c379" },  # Green
+    { name = "*.bash", fg = "#98c379" },
+    { name = "*.zsh", fg = "#98c379" },
+    { name = "*.lua", fg = "#61afef" },
+    { name = "*.vim", fg = "#98c379" },
+
+    # Config files
+    { name = "*.toml", fg = "#c678dd" },  # Magenta
+    { name = "*.yaml", fg = "#c678dd" },
+    { name = "*.yml", fg = "#c678dd" },
+    { name = "*.json", fg = "#c678dd" },
+    { name = "*.conf", fg = "#c678dd" },
+    { name = "*.ini", fg = "#c678dd" },
+
+    # Archives
+    { name = "*.zip", fg = "#c678dd" },  # Magenta
+    { name = "*.tar", fg = "#c678dd" },
+    { name = "*.gz", fg = "#c678dd" },
+    { name = "*.xz", fg = "#c678dd" },
+    { name = "*.bz2", fg = "#c678dd" },
+    { name = "*.7z", fg = "#c678dd" },
+
+    # Images
+    { mime = "image/*", fg = "#56b6c2" },  # Cyan
+    { name = "*.png", fg = "#56b6c2" },
+    { name = "*.jpg", fg = "#56b6c2" },
+    { name = "*.jpeg", fg = "#56b6c2" },
+    { name = "*.gif", fg = "#56b6c2" },
+    { name = "*.svg", fg = "#56b6c2" },
+    { name = "*.webp", fg = "#56b6c2" },
+
+    # Videos
+    { mime = "video/*", fg = "#c678dd" },  # Magenta
+    { name = "*.mp4", fg = "#c678dd" },
+    { name = "*.mkv", fg = "#c678dd" },
+    { name = "*.avi", fg = "#c678dd" },
+    { name = "*.mov", fg = "#c678dd" },
+
+    # Audio
+    { mime = "audio/*", fg = "#c678dd" },  # Magenta
+    { name = "*.mp3", fg = "#c678dd" },
+    { name = "*.flac", fg = "#c678dd" },
+    { name = "*.wav", fg = "#c678dd" },
+    { name = "*.ogg", fg = "#c678dd" },
+
+    # Git
+    { name = ".git", fg = "#e06c75" },
+    { name = ".gitignore", fg = "#828997" },
+    { name = ".gitmodules", fg = "#828997" },
+]
+
+[status]
+separator_open = ""
+separator_close = ""
+separator_style = { fg = "#61afef", bg = "#282c34" }  # Blue separator
+
+# Mode indicators
+mode_normal = { fg = "#282c34", bg = "#61afef", bold = true }  # Blue normal mode
+mode_select = { fg = "#282c34", bg = "#9cdef2", bold = true }  # Cyan select mode
+mode_unset = { fg = "#282c34", bg = "#e06c75", bold = true }  # Red unset mode
+
+# Progress bar
+progress_label = { fg = "#9cdef2", bold = true }
+progress_normal = { fg = "#61afef", bg = "#3e4451" }
+progress_error = { fg = "#e06c75", bg = "#3e4451" }
+
+# Permissions display
+permissions_t = { fg = "#98c379" }  # Green
+permissions_r = { fg = "#e5c07b" }  # Yellow
+permissions_w = { fg = "#e06c75" }  # Red
+permissions_x = { fg = "#61afef" }  # Blue
+permissions_s = { fg = "#c678dd" }  # Magenta
+
+[select]
+border = { fg = "#61afef" }  # Blue border
+active = { fg = "#9cdef2", bold = true }  # Light cyan active
+inactive = { fg = "#828997" }  # Gray inactive
+
+[input]
+border = { fg = "#61afef" }  # Blue border
+title = { fg = "#9cdef2" }  # Light cyan title
+value = { fg = "#9cdef2" }  # Light cyan input
+selected = { bg = "#3e4451" }  # Selection background
+
+[completion]
+border = { fg = "#61afef" }  # Blue border
+active = { bg = "#3e4451" }  # Active item background
+inactive = {}
+
+[tasks]
+border = { fg = "#61afef" }  # Blue border
+title = { fg = "#9cdef2" }  # Light cyan title
+hovered = { bg = "#3e4451" }  # Hovered task background
+
+[which]
+cols = 3
+mask = { bg = "#282c34" }
+cand = { fg = "#9cdef2" }  # Light cyan candidates
+rest = { fg = "#828997" }  # Gray rest
+desc = { fg = "#61afef" }  # Blue description
+separator = "  "
+separator_style = { fg = "#444444" }
+
+[help]
+on = { fg = "#9cdef2" }  # Light cyan key
+exec = { fg = "#61afef" }  # Blue command
+desc = { fg = "#828997" }  # Gray description
+hovered = { bg = "#3e4451" }  # Hovered help item
+
+[notify]
+title_info = { fg = "#61afef" }  # Blue info
+title_warn = { fg = "#e5c07b" }  # Yellow warning
+title_error = { fg = "#e06c75" }  # Red error

@@ -196,6 +196,9 @@ main() {
     # Deploy Alacritty (terminal emulator)
     deploy_config "alacritty"
 
+    # Deploy Yazi (terminal file manager)
+    deploy_config "yazi"
+
     # Deploy Neofetch (animated system info)
     deploy_config "neofetch"
 

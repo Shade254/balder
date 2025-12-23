@@ -1,0 +1,61 @@
+# ─────────────────────────────────────────────────────────────────────────
+#  Yazi Custom Keybindings
+#  Based on official Yazi defaults + your customizations
+# ─────────────────────────────────────────────────────────────────────────
+
+[mgr]
+prepend_keymap = [
+    # ── FIX DEFAULTS TO WHAT YOU EXPECT ─────────────────────────────────────
+
+    # i = Toggle hidden files (. is the default, but i makes more sense)
+    { on = "i", run = "hidden toggle", desc = "Toggle hidden files" },
+
+    # / = Search (override the confusing "find next")
+    { on = "/", run = "search --via=fd", desc = "Search files" },
+
+    # e = Open file with default app
+    { on = "e", run = "open", desc = "Open file" },
+
+    # b = Toggle preview pane visibility
+    { on = "b", run = "plugin toggle-pane min-preview", desc = "Toggle preview" },
+
+    # ── YOUR CUSTOM KEYBINDS ────────────────────────────────────────────────
+
+    # Open with Cursor
+    { on = "c", run = 'shell "cursor $@" --block --confirm', desc = "Open in Cursor" },
+
+    # Open with nano
+    { on = "n", run = 'shell "nano $@" --block --confirm', desc = "Edit with nano" },
+
+    # Copy path to clipboard
+    { on = "w", run = 'shell "echo -n $0 | wl-copy" --block --confirm', desc = "Copy path" },
+
+    # Copy filename only (not full path)
+    { on = "f", run = 'shell "basename $0 | wl-copy" --block --confirm', desc = "Copy filename" },
+
+    # Open Thunar in current directory
+    { on = "o", run = 'shell "thunar $PWD &" --confirm', desc = "Open Thunar" },
+
+    # ── SHIFT-KEY REPLACEMENTS (Shift doesn't work on this system) ─────────
+
+    # \ = Create directory (mkdir) - replaces A/Shift+a
+    { on = "\\", run = "create --dir", desc = "Create directory" },
+
+    # Permanent delete (D/Shift+d) removed - too dangerous for quick shortcut
+    # Use 'd' to trash instead, then empty trash from system if needed
+]
+
+[tasks]
+prepend_keymap = [
+    { on = "w", run = "close", desc = "Close task manager" },
+]
+
+[select]
+# Using defaults - Esc and Enter already work out of the box
+
+[input]
+# Using defaults - Backspace, Delete, arrows, Esc, Enter all work out of the box
+# Only add custom bindings here if needed
+
+[help]
+# Using defaults - Esc and q already work out of the box

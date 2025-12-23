@@ -14,34 +14,25 @@
   (box :orientation "vertical" :halign "start" :spacing 4
 
     ;; CPU LOAD
-    (label :text "[ CPU LOAD ]" :class "stats-label" :halign "start" :width 350 :xalign 0
-      :style "padding: 0; margin-left: 0px; margin-bottom: -2px; font-size: 12px;")
+    (label :text "[ CPU LOAD ]" :class "stats-label-bars" :halign "start" :width 350 :xalign 0)
     (box :orientation "horizontal" :halign "start" :spacing 4
-      (box :class "module-frame" :orientation "vertical" :halign "start"
-        :style "margin-top: -8px; min-width: 265px;"
+      (box :class "module-frame-bar" :orientation "vertical" :halign "start"
         (label :text cpu_bar :class "ram-bar"))
-      (box :class "module-frame" :orientation "vertical" :halign "start" :valign "center"
-        :style "margin-top: -8px; min-width: 50px; min-height: 30px; padding: 3px;"
+      (box :class "module-frame-value" :orientation "vertical" :halign "start" :valign "center"
         (label :text "${cpu_usage}%" :class "ram-bar2" :halign "center" :valign "center" :width 50)))
 
     ;; RAM USAGE
-    (label :text "[ RAM USAGE ]" :class "stats-label" :halign "start" :width 350 :xalign 0
-      :style "padding: 0; margin-left: 0px; margin-bottom: -2px; font-size: 12px;")
+    (label :text "[ RAM USAGE ]" :class "stats-label-bars" :halign "start" :width 350 :xalign 0)
     (box :orientation "horizontal" :halign "start" :spacing 4
-      (box :class "module-frame" :orientation "vertical" :halign "start"
-        :style "margin-top: -8px; min-width: 265px;"
+      (box :class "module-frame-bar" :orientation "vertical" :halign "start"
         (label :text ram_bar :class "ram-bar"))
-      (box :class "module-frame" :orientation "vertical" :halign "start" :valign "center"
-        :style "margin-top: -8px; min-width: 50px; min-height: 30px; padding: 3px;"
+      (box :class "module-frame-value" :orientation "vertical" :halign "start" :valign "center"
         (label :text "${ram_percent}%" :class "ram-bar2" :halign "center" :valign "center" :width 50)))
 
     ;; STORAGE
-    (label :text "[ STORAGE ]" :class "stats-label" :halign "start" :width 350 :xalign 0
-      :style "padding: 0; margin-left: 0px; margin-bottom: -2px; font-size: 12px;")
+    (label :text "[ STORAGE ]" :class "stats-label-bars" :halign "start" :width 350 :xalign 0)
     (box :orientation "horizontal" :halign "start" :spacing 4
-      (box :class "module-frame" :orientation "vertical" :halign "start"
-        :style "margin-top: -8px; min-width: 265px;"
+      (box :class "module-frame-bar" :orientation "vertical" :halign "start"
         (label :text storage_bar :class "ram-bar"))
-      (box :class "module-frame" :orientation "vertical" :halign "start" :valign "center"
-        :style "margin-top: -8px; min-width: 50px; min-height: 30px; padding: 3px;"
+      (box :class "module-frame-value" :orientation "vertical" :halign "start" :valign "center"
         (label :text "${storage_percent}%" :class "ram-bar2" :halign "center" :valign "center" :width 50)))))

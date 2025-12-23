@@ -96,3 +96,9 @@ if [[ -n $PS1 ]]; then
    ~/.config/neofetch/animated-neofetch.sh 0.05
   clear
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/miro/google-cloud-sdk/path.zsh.inc' ]; then . '/home/miro/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/miro/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/miro/google-cloud-sdk/completion.zsh.inc'; fi

@@ -1,15 +1,15 @@
 ;; ── ascii decor frame ───────────────────────────────────────────────────
-;; Decorative ASCII frame element
-;; Anchored bottom right
+;; Decorative ASCII tick marks flanking the network bars
+;; All styling via CSS classes (no inline styles)
 
 (defwindow ascii_decor_frame
   :visible show_eww
-  :anchor "bottom right"
+  :anchor "top left"
   :monitor 0
-  :geometry (geometry :x "30px" :y "808px" :width "220px" :height "100px")
+  :geometry (geometry :x "0px" :y "949px" :width "530px" :height "100px")
   :stacking "bg"
   :exclusive false
   :focusable false
 
-  (box :orientation "vertical" :halign "center" :valign "center"
-    (label :text ascii_decor1 :class "ascii-decor1")))
+  (box :orientation "vertical" :halign "start" :valign "start"
+    (label :text ascii_decor1 :class "net-ascii-decor" :truncate false :xalign 0)))

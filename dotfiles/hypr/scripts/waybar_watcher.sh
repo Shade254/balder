@@ -16,7 +16,7 @@ wallpaper_without_window="$HOME/.config/hypr/wallpapers/bg_wallpaper.png"
 current_mode=""  # "eww" or "waybar"
 
 # Eww widgets (single line for faster parsing)
-eww_windows="ascii_decor_frame cpu_ram_storage_bars four_boxes net_bars power-cooling_header_text power_mode_text right_fan_data right_internet_text welcome_text workspace_window_text"
+eww_windows="ascii_decor_frame cpu_ram_storage_bars four_boxes net_bars power-cooling_header_text power_mode_text right_fan_data welcome_text workspace_window_text"
 
 # Debounce settings
 DEBOUNCE_MS=150

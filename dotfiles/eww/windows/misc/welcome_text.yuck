@@ -14,13 +14,10 @@
   (box :orientation "vertical" :halign "start" :class "stats-box" :spacing 1
 
     ;; Welcome Line
-    (label :text "Добро пожаловать, ${USER}" :class "label-primary" :halign "start"
-      :style "margin-top: -20px;")
+    (label :text "Добро пожаловать, ${USER}" :class "label-primary welcome-line-first" :halign "start")
 
     ;; Date Line
-    (label :text "Сегодня: ${welcome_date}" :class "label-primary" :halign "start"
-      :style "margin-top: -10px;")
+    (label :text "Сегодня: ${welcome_date}" :class "label-primary welcome-line" :halign "start")
 
     ;; Weather Line
-    (label :text "Погода: ${weather_forecast}" :class "label-primary" :halign "start"
-      :style "margin-top: -10px;")))
+    (label :text "Погода: ${weather_forecast}" :class "label-primary welcome-line" :halign "start")))

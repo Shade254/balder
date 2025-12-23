@@ -1,0 +1,141 @@
+# ─────────────────────────────────────────────────────────────────────────
+#  °˖* ૮(  • ᴗ ｡)っ🍸  Yazi Configuration
+#  Personalized for your workflow
+# ─────────────────────────────────────────────────────────────────────────
+
+[mgr]
+# Layout: [parent pane : current pane : preview pane]
+ratio = [1, 4, 3]
+
+# Sorting
+sort_by = "natural"        # Natural alphanumeric sorting (file1, file2, file10)
+sort_reverse = false       # A-Z, not Z-A
+sort_dir_first = true      # Directories first, then files
+show_hidden = false        # Hide dotfiles by default (press 'i' to toggle)
+show_symlink = true        # Show symlinks
+
+# Performance
+linemode = "size"          # Show file sizes in list
+scrolloff = 5              # Keep 5 lines above/below cursor when scrolling
+
+[preview]
+# Preview pane settings
+tab_size = 2               # Tab width in previews
+max_width = 1600           # Max preview width (pixels) - MacBook Pro 2560x1600 @ 1.25 scale
+max_height = 2000          # Max preview height (pixels)
+cache_dir = ""             # Use default cache location
+
+# Image preview
+image_filter = "lanczos3"  # High quality image scaling
+image_quality = 75         # JPEG quality for thumbnails
+
+# Image adapter: Using Chafa with Sixel protocol
+# Alacritty-sixel-git provides sixel support for proper relative positioning
+# Yazi auto-detects sixel capability and uses Chafa for pixel-perfect images
+# No manual offset/scale needed - images follow preview pane automatically!
+
+# Preview wrapping
+wrap = "no"                # Don't wrap long lines
+max_size = 10485760        # Don't preview files larger than 10MB
+
+[opener]
+# File openers configuration
+
+# Text editing - Smart detection
+edit = [
+    { run = 'nano "$@"', block = true, desc = "Edit with nano" },
+]
+
+# Code files - Open in Cursor
+code = [
+    { run = 'cursor "$@"', orphan = true, desc = "Open in Cursor" },
+]
+
+# Images - imv (Wayland native)
+image = [
+    { run = 'imv "$@"', orphan = true, desc = "View with imv" },
+]
+
+# Videos - VLC
+video = [
+    { run = 'vlc "$@"', orphan = true, desc = "Play with VLC" },
+]
+
+# Audio - VLC
+audio = [
+    { run = 'vlc "$@"', orphan = true, desc = "Play with VLC" },
+]
+
+# PDFs
+pdf = [
+    { run = 'zathura "$@"', orphan = true, desc = "Open with Zathura" },
+]
+
+# Archives (extract with default)
+archive = [
+    { run = 'file-roller "$@"', orphan = true, desc = "Extract with File Roller" },
+]
+
+# Fallback
+fallback = [
+    { run = 'xdg-open "$@"', orphan = true, desc = "Open with default app" },
+]
+
+[open]
+# Rules for which opener to use based on file type
+rules = [
+    # Code files → Cursor
+    { mime = "text/x-python", use = "code" },
+    { mime = "text/x-rust", use = "code" },
+    { mime = "text/javascript", use = "code" },
+    { mime = "text/x-shellscript", use = "code" },
+    { name = "*.rs", use = "code" },
+    { name = "*.py", use = "code" },
+    { name = "*.js", use = "code" },
+    { name = "*.ts", use = "code" },
+    { name = "*.jsx", use = "code" },
+    { name = "*.tsx", use = "code" },
+    { name = "*.go", use = "code" },
+    { name = "*.lua", use = "code" },
+    { name = "*.vim", use = "code" },
+    { name = "*.sh", use = "code" },
+    { name = "*.bash", use = "code" },
+    { name = "*.zsh", use = "code" },
+
+    # Config/text files → nano
+    { mime = "text/*", use = "edit" },
+    { name = "*.txt", use = "edit" },
+    { name = "*.md", use = "edit" },
+    { name = "*.conf", use = "edit" },
+    { name = "*.toml", use = "edit" },
+    { name = "*.yaml", use = "edit" },
+    { name = "*.yml", use = "edit" },
+    { name = "*.json", use = "edit" },
+    { name = "*.ini", use = "edit" },
+
+    # Media files
+    { mime = "image/*", use = "image" },
+    { mime = "video/*", use = "video" },
+    { mime = "audio/*", use = "audio" },
+
+    # Documents
+    { mime = "application/pdf", use = "pdf" },
+
+    # Archives
+    { mime = "application/zip", use = "archive" },
+    { mime = "application/x-tar", use = "archive" },
+    { mime = "application/x-bzip2", use = "archive" },
+    { mime = "application/x-gzip", use = "archive" },
+]
+
+[tasks]
+# Task management
+micro_workers = 5          # Number of workers for small tasks
+macro_workers = 10         # Number of workers for large tasks
+bizarre_retry = 5          # Retries for bizarre tasks
+
+[which]
+# Command palette
+sort_by = "none"           # Don't sort commands
+sort_sensitive = false     # Case insensitive
+sort_reverse = false

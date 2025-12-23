@@ -1,18 +1,37 @@
 #!/usr/bin/env bash
-# ~/.config/eww/scripts/net/net_vpn_bar.sh
-# Render a 5-line bar directly based on VPN (ipsec) status.
+# ─────────────────────────────────────────────────────────────────────────────
+#  net_vpn_bar.sh
+#  Renders a 5-line VPN status bar from percentage input.
+#  Uses Pango markup for tight line spacing.
+#
+#  Usage: ./net_vpn_bar.sh <percent>
+#  Example: ./net_vpn_bar.sh 100  → full bar (connected)
+#           ./net_vpn_bar.sh 0    → empty bar (disconnected)
+# ─────────────────────────────────────────────────────────────────────────────
 
-lines=5
+percent=${1:-0}
+lines=10
 
-if sudo /usr/bin/ipsec statusall 2>/dev/null | grep -q "ESTABLISHED"; then
-  # VPN is up → full block bar
-  for ((i=0; i<lines; i++)); do
-    echo "█"
-  done
+# VPN is binary: 100 = full, anything else = empty
+if [[ "$percent" -ge 100 ]]; then
+  filled=$lines
 else
-  # VPN is down → thin bar
-  for ((i=0; i<lines; i++)); do
-    echo "│"
-  done
+  filled=0
 fi
 
+# Build output with Pango markup for tight line spacing
+output='<span line_height="0.6">'
+for ((i=0; i<lines; i++)); do
+  row=$((lines - i))
+  if (( row <= filled )); then
+    output+="█"
+  else
+    output+="│"
+  fi
+  if (( i < lines - 1 )); then
+    output+="&#10;"
+  fi
+done
+output+='</span>'
+
+printf '%s' "$output"
