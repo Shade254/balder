@@ -1,0 +1,37 @@
+;; ──────────────────────────────────────────────────────────────────────────
+;;  Fan Dashboard Widget (spec-005)
+;;  Unified fan + power metrics display for T2 MacBook Pro
+;;  Layout: Left Fan | Metrics | Right Fan
+;; ──────────────────────────────────────────────────────────────────────────
+
+(defwindow fan_dashboard
+  :anchor "top left"
+  :monitor 0
+  :geometry (geometry :x "0px" :y "570px" :width "340px" :height "140px")
+  :stacking "bg"
+  :exclusive false
+  :focusable false
+
+  (box :orientation "horizontal" :halign "fill" :valign "center" :space-evenly false
+
+    ;; ═══ LEFT FAN COLUMN ═══════════════════════════════════════════════════
+    (box :orientation "vertical" :halign "start" :valign "start" :spacing 0 :space-evenly false
+      (label :markup fan_left_art :class "fan-art")
+      (label :text fan_left_rpm :class "fan-rpm-new"))
+
+    ;; ═══ CENTER METRICS COLUMN ═════════════════════════════════════════════
+    ;; Vertical stack: label, value, label, value (energy first, then power)
+    ;; hexpand true makes this column take remaining space and center itself
+    (box :orientation "vertical" :halign "center" :valign "center" :spacing 4 :space-evenly false :hexpand true
+      (label :text "энергия" :class "fan-metric-label-first")
+      (label :text battery_energy :class "fan-metric-value")
+      (label :text "мощность" :class "fan-metric-label")
+      (label :text power_draw_new
+             :class {power_state == "charging" ? "fan-metric-value-charging" :
+                     power_state == "discharging" ? "fan-metric-value-discharging" :
+                     "fan-metric-value"}))
+
+    ;; ═══ RIGHT FAN COLUMN ══════════════════════════════════════════════════
+    (box :orientation "vertical" :halign "end" :valign "start" :spacing 0 :space-evenly false
+      (label :markup fan_right_art :class "fan-art")
+      (label :text fan_right_rpm :class "fan-rpm-new"))))

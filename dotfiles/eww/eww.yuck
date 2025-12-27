@@ -8,9 +8,8 @@
 (include "windows/sys/four_boxes.yuck")
 (include "windows/sys/workspace_window_text.yuck")
 (include "windows/bar/cpu_ram_storage_bars.yuck")
-(include "windows/sys/power_cooling_header_text.yuck")
-(include "windows/sys/power_mode_text.yuck")
-(include "windows/sys/right_fan_data.yuck")
+;; NOTE: power_cooling_header_text, power_mode_text, right_fan_data replaced by fan_dashboard (spec-005)
+(include "windows/sys/fan_dashboard.yuck")
 (include "windows/net/ascii_decor_frame.yuck")
 (include "windows/net/net_bars.yuck")
 (include "windows/misc/welcome_text.yuck")
@@ -37,16 +36,8 @@
 ;; which shows Cyrillic letters (А, Б, В, Г) for workspaces 1-4, numbers for 5+
 
 ;; === Power & Voltage ────────────────────────────────────────────────────────
-(defpoll gpu_voltage :interval "5s"
-  "bash ~/.config/eww/scripts/sys/sys_gpu_voltage.sh || echo 'null'")
-(defpoll cpu_voltage :interval "5s"
-  "bash ~/.config/eww/scripts/sys/sys_cpu_voltage.sh || echo 'null'")
-(defpoll dc_voltage :interval "10s"
-  "bash ~/.config/eww/scripts/sys/sys_dc_voltage.sh || echo 'null'")
-(defpoll power_mode :interval "10s"
-  "bash ~/.config/eww/scripts/sys/sys_power_mode.sh || echo 'null'")
-(defpoll power_draw :interval "5s"
-  "sensors | grep -m 1 'power1:' | awk '{print $2 \" \"$3}' || echo 'N/A'")
+;; NOTE: Old AMD-specific defpolls removed - replaced by UPower-based fan_dashboard (spec-005)
+;; See "FAN DASHBOARD (spec-005)" section below for new power/energy defpolls
 
 ;; === CPU & GPU Stats ────────────────────────────────────────────────────────
 (defpoll cpu :interval "10m"
@@ -79,6 +70,31 @@
   "bash ~/.config/eww/scripts/sys/sys_fan_spin.sh left || echo 'null'")
 (defpoll gpu_fan_ascii :interval "0.2s"
   "bash ~/.config/eww/scripts/sys/sys_fan_spin.sh right || echo 'null'")
+
+;; ═══ FAN DASHBOARD (spec-005) ═══════════════════════════════════════════════
+;; Large ASCII fan art (3-5 lines, animated)
+(defpoll fan_left_art :interval "0.3s"
+  "bash ~/.config/eww/scripts/sys/sys_fan_large.sh left || echo '  [?]  '")
+(defpoll fan_right_art :interval "0.3s"
+  "bash ~/.config/eww/scripts/sys/sys_fan_large.sh right || echo '  [?]  '")
+
+;; Fan RPM with Cyrillic units
+(defpoll fan_left_rpm :interval "5s"
+  "sensors | grep -E '^fan1:' | awk '{print $2 \" об/мин\"}' || echo 'N/A'")
+(defpoll fan_right_rpm :interval "5s"
+  "sensors | grep -E '^fan2:' | awk '{print $2 \" об/мин\"}' || echo 'N/A'")
+
+;; Power draw with arrow indicator (UPower-based)
+(defpoll power_draw_new :interval "5s"
+  "bash ~/.config/eww/scripts/sys/sys_power_draw.sh || echo 'N/A'")
+
+;; Charging state for color styling
+(defpoll power_state :interval "5s"
+  "upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep 'state:' | awk '{print $2}' || echo 'unknown'")
+
+;; Battery energy in Wh
+(defpoll battery_energy :interval "10s"
+  "bash ~/.config/eww/scripts/sys/sys_energy.sh || echo 'N/A'")
 
 ;; === Memory & Storage ───────────────────────────────────────────────────────
 (defpoll ram_info :interval "5s"

@@ -312,3 +312,69 @@ window {
   letter-spacing: 1px;
   min-width: 15px;
 }
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+//   FAN DASHBOARD (spec-005)
+//   Unified fan + power metrics widget
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Large ASCII fan art (3-5 lines)
+.fan-art {
+  font-size: 16px;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  color: $color-primary;
+  letter-spacing: 0px;
+  margin: -2px 0;
+}
+
+// Fan RPM value with Cyrillic units
+.fan-rpm-new {
+  font-size: 11px;
+  font-family: monospace;
+  color: $color-secondary;
+  font-weight: bold;
+  margin-top: 0px;
+}
+
+// Metric label (мощность, энергия)
+.fan-metric-label {
+  font-size: 16px;
+  font-family: monospace;
+  color: $color-secondary;
+}
+
+// First metric label - align with fan top border
+.fan-metric-label-first {
+  font-size: 16px;
+  font-family: monospace;
+  color: $color-secondary;
+  margin-top: 0px;
+}
+
+// Default metric value
+.fan-metric-value {
+  font-size: 15px;
+  font-family: monospace;
+  color: $color-primary;
+  font-weight: bold;
+  margin-top: -5px;
+}
+
+// Charging state - green
+.fan-metric-value-charging {
+  font-size: 15px;
+  font-family: monospace;
+  color: #a6e3a1;  // Catppuccin green
+  font-weight: bold;
+  margin-top: -5px;
+}
+
+// Discharging state - orange
+.fan-metric-value-discharging {
+  font-size: 15px;
+  font-family: monospace;
+  color: $color-orange;
+  font-weight: bold;
+  margin-top: -5px;
+}

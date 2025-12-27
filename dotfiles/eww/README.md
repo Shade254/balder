@@ -56,9 +56,7 @@ eww/
     │   └── right_internet_text.yuck
     └── sys/
         ├── four_boxes.yuck
-        ├── power_cooling_header_text.yuck
-        ├── power_mode_text.yuck
-        ├── right_fan_data.yuck
+        ├── fan_dashboard.yuck          # Unified fan + power metrics (spec-005)
         └── workspace_window_text.yuck
 ```
  
@@ -81,10 +79,7 @@ eww open-many ascii_decor_frame \
                cpu_ram_storage_bars \
                four_boxes \
                net_bars \
-               power-cooling_header_text \
-               power_mode_text \
-               right_fan_data \
-               right_internet_text \
+               fan_dashboard \
                welcome_text \
                workspace_window_text
 ```
