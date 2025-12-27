@@ -4,26 +4,25 @@
  °˖* ૮( • ᴗ ｡)っ🍸 shheersh - Balder v1.0   
  ───────────────────────────────────────────────  
 
-## Custom animated **EWW*. 
-A custom **eww (Elkowar’s Wacky Widgets) HUD** for Linux — this is duct-taped together ASCII art, system stats, network monitoring, and neon reactor-core vibes. 
+## Custom animated **EWW** HUD
+A custom **eww (Elkowar's Wacky Widgets) HUD** for Linux — optimized for MacBook Pro T2 with ASCII art system stats, network monitoring, and neon reactor-core vibes.
 
 ![Eww Demo Png](../../assets/demo-eww.png)
 ---
 
 ## Features
-  - Easy monitor of sensors and network
+  - **T2-optimized** - UPower-based power metrics, lm-sensors integration
+  - **Synchronized ASCII fans** - Animated dual-fan display with Cyrillic units
+  - **Network monitoring** - Download/upload bars, ping latency, VPN status
+  - **CPU/RAM/Storage** - Real-time system resource bars
   - Атмосфера холодного цеха
 
 ![Eww Demo Gif](../../assets/demo-eww.gif)
-  
+
 ```
 eww/
-├── README.md
-├── demo.gif
-├── demo.png
-├── eww-state.yml
-├── eww.scss
-├── eww.yuck
+├── eww.yuck                    # Main config with defpolls and includes
+├── eww.scss                    # Stylesheet with theme variables
 ├── scripts/
 │   ├── ascii/
 │   │   └── ascii_core_layout.sh
@@ -37,14 +36,17 @@ eww/
 │   │   ├── net_upload.sh
 │   │   ├── net_upload_bar.sh
 │   │   ├── net_vpn.sh
-│   │   └── net_vpn_bar.sh
+│   │   ├── net_vpn_bar.sh
+│   │   └── net_vpn_status.sh
 │   └── sys/
 │       ├── sys_cpu_voltage.sh
 │       ├── sys_dc_voltage.sh
+│       ├── sys_energy.sh       # Battery remaining Wh (UPower)
 │       ├── sys_fan_bar.sh
+│       ├── sys_fan_large.sh    # Animated ASCII fan art (spec-005)
 │       ├── sys_fan_spin.sh
 │       ├── sys_gpu_voltage.sh
-│       └── sys_workspace.sh
+│       └── sys_power_draw.sh   # Power draw with state indicator (UPower)
 └── windows/
     ├── bar/
     │   └── cpu_ram_storage_bars.yuck
@@ -52,29 +54,28 @@ eww/
     │   └── welcome_text.yuck
     ├── net/
     │   ├── ascii_decor_frame.yuck
-    │   ├── net_bars.yuck
-    │   └── right_internet_text.yuck
+    │   └── net_bars.yuck
     └── sys/
+        ├── fan_dashboard.yuck          # Unified fan + power widget (spec-005)
         ├── four_boxes.yuck
-        ├── fan_dashboard.yuck          # Unified fan + power metrics (spec-005)
         └── workspace_window_text.yuck
 ```
  
 
 ## Requirements
-  - **eww** (Elkowar’s Wacky Widgets)  
-  - **jq** (for JSON parsing)  
-  - **lm-sensors** (for voltages, temps, fans)  
-  - **nvidia-smi** (if using NVIDIA GPU monitoring)  
-  - **curl**
-  - **ping**
+  - **eww** (Elkowar's Wacky Widgets)
+  - **lm-sensors** (for fan RPM, temps)
+  - **upower** (for battery energy and power draw)
+  - **jq** (for JSON parsing)
+  - **curl** (for network checks)
+  - **ping** (for latency monitoring)
 
 ---
 
 ## Usage
 To launch the full HUD:
 
-```
+```bash
 eww open-many ascii_decor_frame \
                cpu_ram_storage_bars \
                four_boxes \
@@ -83,14 +84,21 @@ eww open-many ascii_decor_frame \
                welcome_text \
                workspace_window_text
 ```
-Eww via: [waybar_watcher.sh](../hypr/scripts/waybar_watcher.sh)
-Run as a `systemd` unit for more robust use.
+
+**Automatic launch:** EWW is managed by [waybar_watcher.sh](../hypr/scripts/waybar_watcher.sh) which toggles between Waybar and EWW based on window activity.
 
 ### Configuration Notes
-Voltages & temps rely on lm-sensors. Run sensors-detect once.
-GPU stats require nvidia-smi.
-Network assumes wlp4s0 — change your interface name in net_* scripts.
-VPN detection looks for 10.6.0.x (NordVPN via strongSwan). Adjust if using another provider.
 
-I'm sorry in advance. God speed if you try and get this running yourself. 
+**T2 MacBook Pro:**
+- Fan RPM via `lm-sensors` (applesmc module)
+- Power metrics via `upower` (BAT0 device)
+- Run `sensors-detect` once to configure lm-sensors
+
+**Network scripts:**
+- Default interface: `wlp4s0` - edit `net_*.sh` scripts if different
+- VPN detection: NordVPN via nordvpn CLI
+
+**For other hardware:**
+- Some sys scripts (sys_gpu_voltage.sh) are AMD/NVIDIA specific - may need adaptation
+- Check `sensors` output to verify available readings 
 

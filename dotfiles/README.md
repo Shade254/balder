@@ -49,13 +49,17 @@ optimized for **MacBook Pro 2018 T2** (_balder_).
 ![Alacritty](../assets/demo-alacritty.png)
 
 ##  Contents
-- [alacritty](alacritty/) → terminal config
-- [eww](eww/) → HUD & widgets
+- [alacritty](alacritty/) → terminal config (Nord-inspired GPU-accelerated)
+- [eww](eww/) → HUD & widgets (T2-optimized system monitoring)
 - [firefox](firefox/) → browser theme
-- [hypr](hypr/) → window manager
+- [greetd](greetd/) → login manager (tuigreet TUI)
+- [hypr](hypr/) → window manager (Hyprland + scripts)
 - [neofetch](neofetch/) → animated fetch
 - [rofi](rofi/) → launcher + powermenu
-- [waybar](waybar/) → status bar
+- [sddm](sddm/) → display manager theme (Maya)
+- [system](system/) → udev rules (T2 hardware permissions)
+- [waybar](waybar/) → status bar (event-driven modules)
+- [yazi](yazi/) → file manager (Rust-based with image preview)
 - [zsh](zsh/) → shell configs  
 
 

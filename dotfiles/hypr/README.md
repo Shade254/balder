@@ -17,15 +17,31 @@ Tuned for EWW integration and Waybar
 ![Hyprland Demo 2](../../assets/demo-hypr-2.gif)
 
 ```
-hyprland/
-├── hyprland.conf
-├── scripts/
-│   ├── waybar_watcher.sh
-│   ├── t2-power/
-│   │   └── cycle-power-mode.sh
-│   └── t2-kbd/
-│       └── kbd-breathing.sh
-└── demo.gif
+hypr/
+├── hyprland.conf           # Main Hyprland config
+├── hyprpaper.conf          # Wallpaper daemon config
+├── hyprlock.conf           # Lock screen config
+├── hyprlock/               # hyprlock themes and assets
+├── wallpapers/             # Background images
+└── scripts/
+    ├── waybar_watcher.sh   # EWW/Waybar toggle based on window state
+    ├── refresh-eww.sh      # Reload EWW widgets
+    ├── screenshot.sh       # Screenshot utility with region selection
+    ├── lock-screen.sh      # Lock screen wrapper
+    ├── lock-with-dpms.sh   # Lock + display power management
+    ├── start-swayidle.sh   # Idle timeout configuration
+    ├── wake-all-displays.sh # Wake monitors from sleep
+    ├── boot-monitors-init.sh # Multi-monitor initialization
+    ├── capslock-status.sh  # CAPS LOCK indicator
+    ├── speech-toggle.sh    # Toggle speech-to-text (F6)
+    ├── speech-start.sh     # Start speech daemon
+    ├── speech-stop.sh      # Stop speech daemon
+    ├── speech-daemon.py    # Whisper AI transcription service
+    ├── t2-power/
+    │   └── cycle-power-mode.sh  # Intel EPP power profile cycling
+    └── t2-kbd/
+        ├── kbd-brightness.sh    # Keyboard backlight control
+        └── kbd-breathing.sh     # Breathing effect toggle
 ```
 
 ## Requirements
@@ -74,10 +90,17 @@ This configuration is optimized for MacBook Pro 2018 with T2 chip running Arch L
 - ❌ Touch ID (not supported on Linux)
 - ❌ FaceTime camera (driver limitations)
 
+### Speech-to-Text (Whisper AI)
+- **F6**: Toggle speech-to-text dictation
+- Uses OpenAI Whisper for local transcription
+- Audio recorded via PipeWire, transcribed text typed via `wtype`
+- See [docs/SPEECH_TO_TEXT_SETUP.md](../../docs/SPEECH_TO_TEXT_SETUP.md) for setup
+
 ### Requirements
 - linux-t2 kernel (6.11+ recommended)
 - brightnessctl for keyboard backlight
 - Udev rules for EPP and keyboard backlight permissions (see `../system/`)
+- For speech-to-text: whisper, wtype, pipewire
 
 ### Installation
 1. Deploy dotfiles: `./deploy.sh`
