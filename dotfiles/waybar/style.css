@@ -65,6 +65,7 @@ window#waybar {
 #custom-microphone,
 #bluetooth,
 #custom-bluetooth,
+#custom-wifi,
 #custom-brightness,
 #custom-volume,
 #custom-battery,
@@ -95,13 +96,34 @@ window#waybar {
 
 /* === Bluetooth =========================================================== */
 
-#bluetooth.disabled {
+#custom-bluetooth.disabled {
+  color: #bf616a;
+}
+
+#custom-bluetooth.disabled:hover {
   color: #fab387;
 }
 
-#custom-bluetooth {
-  color: #56b6c2;
-  transition: color 0.2s ease-in-out;
+
+/* === Microphone ========================================================== */
+
+#custom-microphone.muted {
+  color: #bf616a;
+}
+
+#custom-microphone.muted:hover {
+  color: #fab387;
+}
+
+
+/* === WiFi ================================================================ */
+
+#custom-wifi.disabled {
+  color: #bf616a;
+}
+
+#custom-wifi.disabled:hover {
+  color: #fab387;
 }
 
 
@@ -209,6 +231,7 @@ window#waybar {
 #custom-volume:hover,
 #pulseaudio:hover,
 #network:hover,
+#custom-wifi:hover,
 #custom-vpn:hover,
 #bluetooth:hover,
 #custom-bluetooth:hover,

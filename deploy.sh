@@ -290,6 +290,35 @@ main() {
         echo ""
     fi
 
+    # Deploy tiny-dfr (Touch Bar) configuration
+    echo ""
+    echo -e "${CYAN}🔘 Touch Bar (tiny-dfr) Setup:${NC}"
+
+    if [ -f "$DOTFILES_DIR/tiny-dfr/config.toml" ]; then
+        # Check if config differs from deployed version
+        if [ -f "/etc/tiny-dfr/config.toml" ]; then
+            if diff -q "$DOTFILES_DIR/tiny-dfr/config.toml" "/etc/tiny-dfr/config.toml" > /dev/null 2>&1; then
+                log_success "tiny-dfr config is up to date"
+            else
+                log_warning "tiny-dfr config differs from deployed version. Updating..."
+                if sudo cp "$DOTFILES_DIR/tiny-dfr/config.toml" /etc/tiny-dfr/config.toml 2>/dev/null; then
+                    log_success "tiny-dfr config updated"
+                    # Restart tiny-dfr service if running
+                    if systemctl is-active --quiet tiny-dfr 2>/dev/null; then
+                        sudo systemctl restart tiny-dfr && log_success "tiny-dfr service restarted" || log_warning "Failed to restart tiny-dfr"
+                    fi
+                else
+                    log_error "Failed to update tiny-dfr config. Run manually:"
+                    echo -e "  ${GREEN}sudo cp dotfiles/tiny-dfr/config.toml /etc/tiny-dfr/config.toml${NC}"
+                fi
+            fi
+        else
+            log_warning "tiny-dfr not installed or config missing at /etc/tiny-dfr/"
+        fi
+    else
+        log_info "No tiny-dfr config in dotfiles (skipping)"
+    fi
+
     echo ""
     echo -e "${CYAN}Next steps:${NC}"
     echo "  1. Review the deployed config at: $CONFIG_DIR/hypr"
